@@ -1,4 +1,4 @@
-package com.rpa.automationframework.internal.finder;
+package com.rpa.automationframework.finders;
 
 import com.rpa.automationframework.internal.types.RawUiElementUnion;
 

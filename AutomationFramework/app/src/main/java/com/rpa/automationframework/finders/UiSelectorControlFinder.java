@@ -1,4 +1,4 @@
-package com.rpa.automationframework.internal.finder;
+package com.rpa.automationframework.finders;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;

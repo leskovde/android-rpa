@@ -3,8 +3,8 @@ package com.rpa.automationframework.controls;
 import androidx.test.uiautomator.*;
 
 import com.rpa.automationframework.Device;
-import com.rpa.automationframework.internal.executor.UiActionExecutor;
-import com.rpa.automationframework.internal.finder.ControlFinder;
+import com.rpa.automationframework.executors.UiActionExecutor;
+import com.rpa.automationframework.finders.ControlFinder;
 import com.rpa.automationframework.internal.types.RawUiElementState;
 
 import java.util.HashMap;

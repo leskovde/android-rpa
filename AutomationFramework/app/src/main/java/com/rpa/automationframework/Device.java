@@ -5,13 +5,11 @@ import android.app.Instrumentation;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
-import com.rpa.automationframework.internal.finder.BySelectorControlFinder;
-import com.rpa.automationframework.internal.finder.ControlFinder;
-import com.rpa.automationframework.internal.finder.UiAutomatorControlFinder;
-import com.rpa.automationframework.internal.finder.UiSelectorControlFinder;
+import com.rpa.automationframework.finders.BySelectorControlFinder;
+import com.rpa.automationframework.finders.ControlFinder;
+import com.rpa.automationframework.finders.UiSelectorControlFinder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
