@@ -13,14 +13,9 @@ public class UiSelectorControlFinder extends UiAutomatorControlFinder {
     }
 
     @Override
-    public RawUiElementUnion findByControlIndex(int index) {
-        UiObject control = uiDevice.findObject(new UiSelector().index(index));
-        return new RawUiElementUnion(control);
-    }
-
-    @Override
     public RawUiElementUnion findByResourceId(String resourceId) {
-        return null;
+        UiObject control = uiDevice.findObject(new UiSelector().resourceId(resourceId));
+        return new RawUiElementUnion(control);
     }
 
     @Override

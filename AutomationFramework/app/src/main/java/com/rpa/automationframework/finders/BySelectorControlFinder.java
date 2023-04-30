@@ -1,6 +1,9 @@
 package com.rpa.automationframework.finders;
 
+import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
+
 
 import com.rpa.automationframework.internal.types.RawUiElementUnion;
 
@@ -11,13 +14,9 @@ public class BySelectorControlFinder extends UiAutomatorControlFinder {
     }
 
     @Override
-    public RawUiElementUnion findByControlIndex(int index) {
-        return null;
-    }
-
-    @Override
     public RawUiElementUnion findByResourceId(String resourceId) {
-        return null;
+        UiObject2 control = uiDevice.findObject(By.res(resourceId));
+        return new RawUiElementUnion(control);
     }
 
     @Override
