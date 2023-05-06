@@ -19,7 +19,7 @@
 - [ ] Find UiElement by text content
 - [ ] Find UiElement by resource id
 - [ ] Find UiElement by description
-- [ ] Find UiElement by class name
+- [x] Find UiElement by class name
 - [x] Find UiElement by index
 - [ ] Find UiElement by absolute position
 - [ ] Find UiElement by relative position

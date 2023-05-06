@@ -19,11 +19,6 @@ public class UiSelectorControlFinder extends UiAutomatorControlFinder {
     }
 
     @Override
-    public RawUiElementUnion findByClassName(String className) {
-        return null;
-    }
-
-    @Override
     public RawUiElementUnion findByDescription(String description) {
         return null;
     }
