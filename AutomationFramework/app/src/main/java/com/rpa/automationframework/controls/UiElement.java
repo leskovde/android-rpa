@@ -1,5 +1,7 @@
 package com.rpa.automationframework.controls;
 
+import android.util.Log;
+
 import androidx.test.uiautomator.*;
 
 import com.rpa.automationframework.Device;
@@ -39,10 +41,22 @@ public abstract class UiElement {
             }
         }
 
+        if (!isValidType()) {
+            Log.println(Log.WARN, "UiElement", "Defaulting to UiElement when searching for " + this.getClass().getSimpleName());
+        }
+
         return state != RawUiElementState.NONE;
     }
 
     public void click() {
-        executors.get(state).click();
+        UiActionExecutor executor = executors.get(state);
+
+        if (executor == null) {
+            throw new RuntimeException("No executor found for state: " + state);
+        }
+
+        executor.click(this);
     }
+
+    protected abstract boolean isValidType();
 }

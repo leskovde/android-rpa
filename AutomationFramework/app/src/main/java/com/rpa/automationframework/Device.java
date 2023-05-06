@@ -1,6 +1,8 @@
 package com.rpa.automationframework;
 
 import android.app.Instrumentation;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -41,19 +43,24 @@ public final class Device {
             throw new IllegalArgumentException("numberOfTries must be greater than 0");
         }
 
-        for (int i = 0; i < numberOfTries; i++) {
-            if (uiDevice.pressBack()) {
-                return;
-            }
+        // Unroll the first iteration to avoid sleeping.
+        if (uiDevice.pressBack()) {
+            return;
+        }
 
+        for (int i = 1; i < numberOfTries; i++) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                // Ignore.
+                Log.println(Log.ERROR, "Device", "Interrupted while pressing back: " + e.getMessage());
+            }
+
+            if (uiDevice.pressBack()) {
+                return;
             }
         }
 
-        throw new RuntimeException("Failed to press back button");
+        Log.println(Log.WARN, "Device", "Failed to press the back button - there might not be a dialog to go back to.");
     }
 
     public void pressBack() {
@@ -65,23 +72,28 @@ public final class Device {
             throw new IllegalArgumentException("numberOfTries must be greater than 0");
         }
 
-        for (int i = 0; i < numberOfTries; i++) {
-            if (uiDevice.pressHome()) {
-                return;
-            }
+        // Unroll the first iteration to avoid sleeping.
+        if (uiDevice.pressHome()) {
+            return;
+        }
 
+        for (int i = 1; i < numberOfTries; i++) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                // Ignore.
+                Log.println(Log.ERROR, "Device", "Interrupted while pressing home: " + e.getMessage());
+            }
+
+            if (uiDevice.pressHome()) {
+                return;
             }
         }
 
-        throw new RuntimeException("Failed to press home button");
+        Log.println(Log.WARN, "Device", "Failed to press the home button - the device might already be on the home screen.");
     }
 
     public void pressHome() {
-        pressHome(1);
+        uiDevice.pressHome();
     }
 
     public void pressRecentApps(int numberOfTries) {
@@ -89,19 +101,29 @@ public final class Device {
             throw new IllegalArgumentException("numberOfTries must be greater than 0");
         }
 
-        for (int i = 0; i < numberOfTries; i++) {
+        // Unroll the first iteration to avoid sleeping.
+        try {
+            if (uiDevice.pressRecentApps()) {
+                return;
+            }
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (int i = 1; i < numberOfTries; i++) {
             try {
+                Thread.sleep(1000);
+
                 if (uiDevice.pressRecentApps()) {
                     return;
                 }
 
-                Thread.sleep(1000);
             } catch (Exception e) {
-                // TODO: Log.
+                Log.println(Log.ERROR, "Device", "Failed to press the recent apps button: " + e.getMessage());
             }
         }
 
-        throw new RuntimeException("Failed to press recent apps button");
+        Log.println(Log.WARN, "Device", "Failed to press the recent apps button.");
     }
 
     public void pressRecentApps() {
@@ -118,5 +140,29 @@ public final class Device {
 
     public void pressPower() {
         uiDevice.pressKeyCode(KeyEvent.KEYCODE_POWER);
+    }
+
+    public void lockScreen() {
+        try {
+            if (!uiDevice.isScreenOn()) {
+                return;
+            }
+        } catch (RemoteException e) {
+            throw new RuntimeException("Failed to check if screen is on: " + e.getMessage());
+        }
+
+        pressPower();
+    }
+
+    public void unlockScreen() {
+        try {
+            if (uiDevice.isScreenOn()) {
+                return;
+            }
+        } catch (RemoteException e) {
+            throw new RuntimeException("Failed to check if screen is on: " + e.getMessage());
+        }
+
+        pressPower();
     }
 }

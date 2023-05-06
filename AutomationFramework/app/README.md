@@ -20,7 +20,7 @@
 - [ ] Find UiElement by resource id
 - [ ] Find UiElement by description
 - [ ] Find UiElement by class name
-- [ ] Find UiElement by index
+- [x] Find UiElement by index
 - [ ] Find UiElement by absolute position
 - [ ] Find UiElement by relative position
 - [ ] Get text from TextBasedUiElement
@@ -36,5 +36,5 @@
 - [ ] Long click on relative position
 - [ ] Swipe vertically from position
 - [ ] Swipe horizontally from position
-- [ ] Press SW buttons (menu, back, home)
-- [ ] Press HW buttons (volume up, volume down, power)
+- [x] Press SW buttons (menu, back, home)
+- [x] Press HW buttons (volume up, volume down, power)
