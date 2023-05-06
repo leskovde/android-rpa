@@ -13,17 +13,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class UiElement {
-    private UiObject uiObject;
-    private UiObject2 uiObject2;
-    private RawUiElementState state = RawUiElementState.NONE;
+    protected UiObject uiObject;
+    protected UiObject2 uiObject2;
+    protected RawUiElementState state = RawUiElementState.NONE;
     // TODO: Register all executors using reflection?
-    private static Map<RawUiElementState, UiActionExecutor> executors = new HashMap<>();
+    protected static Map<RawUiElementState, UiActionExecutor> executors = new HashMap<>();
 
     public int index;
     public String resourceId;
     public String className;
     public String packageName;
     public String description;
+
+    public abstract boolean isInternalTypeAssignable(Class<?> internalType);
 
     public boolean tryFindByIndex() {
         for (ControlFinder finder : Device.getInstance().controlFinders) {
@@ -58,5 +60,27 @@ public abstract class UiElement {
         executor.click(this);
     }
 
-    protected abstract boolean isValidType();
+    public Class<?> getUiObjectType() {
+        return uiObject.getClass();
+    }
+
+    public Class<?> getUiObject2Type() {
+        return uiObject2.getClass();
+    }
+
+    private boolean isValidType() {
+        UiActionExecutor executor = executors.get(state);
+
+        if (executor == null) {
+            throw new RuntimeException("No executor found for state: " + state);
+        }
+
+        Class<?> internalType = executor.getInternalType(this);
+
+        if (internalType == null) {
+            throw new RuntimeException("No internal type found for state: " + state);
+        }
+
+        return isInternalTypeAssignable(internalType);
+    }
 }
