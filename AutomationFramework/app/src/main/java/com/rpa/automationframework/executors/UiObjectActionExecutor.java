@@ -7,6 +7,7 @@ import androidx.test.uiautomator.UiObject;
 import com.rpa.automationframework.controls.TextBasedUiElement;
 import com.rpa.automationframework.controls.UiElement;
 
+// TODO: I should check whether the incoming UiObject exists.
 public class UiObjectActionExecutor implements UiActionExecutor {
 
     @Override
@@ -26,5 +27,18 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         }
 
         return text;
+    }
+
+    @Override
+    public boolean isChecked(TextBasedUiElement element) {
+        UiObject control = element.getUiObject();
+
+        try {
+            return control.isChecked();
+        } catch (Exception e) {
+            Log.println(Log.ERROR, "UiObjectActionExecutor", "Error getting checked state from UiObject");
+        }
+
+        return false;
     }
 }

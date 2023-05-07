@@ -14,4 +14,6 @@ public interface UiActionExecutor {
     Class<?> getInternalType(UiElement element);
 
     String getText(TextBasedUiElement element);
+
+    boolean isChecked(TextBasedUiElement element);
 }

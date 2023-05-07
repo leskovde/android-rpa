@@ -24,7 +24,7 @@
 - [ ] Find UiElement by absolute position
 - [ ] Find UiElement by relative position
 - [x] Get text from TextBasedUiElement
-- [ ] Get checked value from CheckableUiElement
+- [x] Get checked value from CheckableUiElement
 - [ ] Get image from ImageBasedUiElement
 - [ ] Edit text in TextBasedUiElement
 - [ ] Change checked value in CheckableUiElement
