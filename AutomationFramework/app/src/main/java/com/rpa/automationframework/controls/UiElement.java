@@ -45,6 +45,22 @@ public abstract class UiElement {
 
     public abstract boolean isInternalTypeAssignable(Class<?> internalType);
 
+    public Class<?> getUiObjectType() {
+        if (uiObject != null) {
+            return uiObject.getClass();
+        }
+
+        return null;
+    }
+
+    public Class<?> getUiObject2Type() {
+        if (uiObject2 != null) {
+            return uiObject2.getClass();
+        }
+
+        return null;
+    }
+
     /**
      * Tries to find the element by index.
      * <p>
@@ -170,6 +186,44 @@ public abstract class UiElement {
         return state != RawUiElementState.NONE;
     }
 
+    // TODO: Implement a way of checking via `contains`.
+    public boolean tryFindByDescription(String description) {
+        RawUiElementUnion lastValidElement = null;
+
+        for (ControlFinder finder : Device.getInstance().controlFinders) {
+            List<RawUiElementUnion> controls = finder.findByDescription(description);
+
+            for (RawUiElementUnion control : controls) {
+                InternalObjectAssigner assigner = assigners.get(control.getState());
+                if (assigner == null) {
+                    continue;
+                }
+
+                InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
+                if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+                    // We have found the best candidate, so we can stop.
+                    return true;
+                }
+
+                if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+                    // The element does not have the valid type, but we can still use it.
+                    lastValidElement = control;
+                }
+            }
+        }
+
+        if (lastValidElement != null) {
+            InternalObjectAssigner assigner = assigners.get(lastValidElement.getState());
+            if (assigner != null) {
+                assigner.tryAssign(lastValidElement);
+            }
+
+            Log.println(Log.WARN, "UiElement", "Defaulting to UiElement when searching for " + this.getClass().getSimpleName());
+        }
+
+        return state != RawUiElementState.NONE;
+    }
+
     public void click() {
         UiActionExecutor executor = executors.get(state);
 
@@ -178,22 +232,6 @@ public abstract class UiElement {
         }
 
         executor.click(this);
-    }
-
-    public Class<?> getUiObjectType() {
-        if (uiObject != null) {
-            return uiObject.getClass();
-        }
-
-        return null;
-    }
-
-    public Class<?> getUiObject2Type() {
-        if (uiObject2 != null) {
-            return uiObject2.getClass();
-        }
-
-        return null;
     }
 
     protected boolean isValidType() {

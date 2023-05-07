@@ -23,8 +23,12 @@ public class UiSelectorControlFinder extends UiAutomatorControlFinder {
     }
 
     @Override
-    public RawUiElementUnion findByDescription(String description) {
-        return null;
+    public List<RawUiElementUnion> findByDescription(String description) {
+        List<RawUiElementUnion> controls = new ArrayList<>();
+        UiObject control = uiDevice.findObject(new UiSelector().description(description));
+        controls.add(new RawUiElementUnion(control));
+
+        return controls;
     }
 
     @Override

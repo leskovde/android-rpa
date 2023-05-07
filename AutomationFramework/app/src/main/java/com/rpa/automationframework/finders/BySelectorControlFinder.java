@@ -2,6 +2,7 @@ package com.rpa.automationframework.finders;
 
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObject2;
 
 
@@ -24,8 +25,8 @@ public class BySelectorControlFinder extends UiAutomatorControlFinder {
     }
 
     @Override
-    public RawUiElementUnion findByDescription(String description) {
-        return null;
+    public List<RawUiElementUnion> findByDescription(String description) {
+        return uiDevice.findObjects(By.desc(description)).stream().map(RawUiElementUnion::new).collect(Collectors.toList());
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface ControlFinder {
     // TODO: Use an enum?
     public List<RawUiElementUnion> findByClassName(String className);
 
-    public RawUiElementUnion findByDescription(String description);
+    public List<RawUiElementUnion> findByDescription(String description);
 
     public List<RawUiElementUnion> findByTextContent(String content);
 }
