@@ -13,4 +13,6 @@ public interface ControlFinder {
     public List<RawUiElementUnion> findByClassName(String className);
 
     public RawUiElementUnion findByDescription(String description);
+
+    public List<RawUiElementUnion> findByTextContent(String content);
 }

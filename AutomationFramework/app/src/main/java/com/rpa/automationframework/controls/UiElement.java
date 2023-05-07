@@ -92,6 +92,30 @@ public abstract class UiElement {
             }
         }
 
+        // TODO: Move the type check up so that we match the proper ui element.
+        if (!isValidType()) {
+            Log.println(Log.WARN, "UiElement", "Defaulting to UiElement when searching for " + this.getClass().getSimpleName());
+        }
+
+        return state != RawUiElementState.NONE;
+    }
+
+    public boolean tryFindByResourceId(String resourceId) {
+        for (ControlFinder finder : Device.getInstance().controlFinders) {
+            Object element = finder.findByResourceId(resourceId).getPayload();
+
+            if (element != null) {
+                if (element instanceof UiObject) {
+                    uiObject = (UiObject) element;
+                    state = RawUiElementState.UIOBJECT;
+                } else {
+                    uiObject2 = (UiObject2) element;
+                    state = RawUiElementState.UIOBJECT2;
+                }
+                break;
+            }
+        }
+
         if (!isValidType()) {
             Log.println(Log.WARN, "UiElement", "Defaulting to UiElement when searching for " + this.getClass().getSimpleName());
         }
@@ -117,7 +141,7 @@ public abstract class UiElement {
         return uiObject2.getClass();
     }
 
-    private boolean isValidType() {
+    protected boolean isValidType() {
         UiActionExecutor executor = executors.get(state);
 
         if (executor == null) {
