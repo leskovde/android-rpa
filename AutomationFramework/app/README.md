@@ -23,7 +23,7 @@
 - [x] Find UiElement by index
 - [ ] Find UiElement by absolute position
 - [ ] Find UiElement by relative position
-- [ ] Get text from TextBasedUiElement
+- [x] Get text from TextBasedUiElement
 - [ ] Get checked value from CheckableUiElement
 - [ ] Get image from ImageBasedUiElement
 - [ ] Edit text in TextBasedUiElement

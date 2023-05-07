@@ -6,6 +6,7 @@ import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObject2;
 
 import com.rpa.automationframework.Device;
+import com.rpa.automationframework.executors.UiActionExecutor;
 import com.rpa.automationframework.finders.ControlFinder;
 import com.rpa.automationframework.internal.types.RawUiElementState;
 import com.rpa.automationframework.internal.types.RawUiElementUnion;
@@ -13,8 +14,6 @@ import com.rpa.automationframework.internal.types.RawUiElementUnion;
 import java.util.List;
 
 public abstract class TextBasedUiElement extends UiElement {
-    public String text;
-
     public boolean tryFindByContent() {
         RawUiElementUnion lastValidElement = null;
 
@@ -50,5 +49,15 @@ public abstract class TextBasedUiElement extends UiElement {
         }
 
         return state != RawUiElementState.NONE;
+    }
+
+    public String getText() {
+        UiActionExecutor executor = executors.get(state);
+
+        if (executor != null) {
+            return executor.getText(this);
+        }
+
+        return "";
     }
 }

@@ -61,6 +61,14 @@ public abstract class UiElement {
         return null;
     }
 
+    public UiObject getUiObject() {
+        return uiObject;
+    }
+
+    public UiObject2 getUiObject2() {
+        return uiObject2;
+    }
+
     /**
      * Tries to find the element by index.
      * <p>
