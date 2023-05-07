@@ -16,4 +16,6 @@ public interface UiActionExecutor {
     String getText(TextBasedUiElement element);
 
     boolean isChecked(TextBasedUiElement element);
+
+    void setCheckedValue(TextBasedUiElement element, boolean checked);
 }

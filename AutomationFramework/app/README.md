@@ -27,7 +27,7 @@
 - [x] Get checked value from CheckableUiElement
 - [ ] Get image from ImageBasedUiElement
 - [ ] Edit text in TextBasedUiElement
-- [ ] Change checked value in CheckableUiElement
+- [x] Change checked value in CheckableUiElement
 - [ ] Click on UiElement
 - [ ] Long click on UiElement
 - [ ] Click on absolute position

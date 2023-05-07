@@ -43,7 +43,7 @@ public abstract class UiElement {
         assigners.put(RawUiElementState.UIOBJECT2, new UiObject2Assigner());
     }
 
-    public abstract boolean isInternalTypeAssignable(Class<?> internalType);
+    protected abstract boolean isInternalTypeAssignable(Class<?> internalType);
 
     public Class<?> getUiObjectType() {
         if (uiObject != null) {

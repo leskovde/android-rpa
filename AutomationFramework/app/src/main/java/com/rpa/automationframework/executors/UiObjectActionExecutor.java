@@ -41,4 +41,20 @@ public class UiObjectActionExecutor implements UiActionExecutor {
 
         return false;
     }
+
+    @Override
+    public void setCheckedValue(TextBasedUiElement element, boolean checked) {
+        UiObject control = element.getUiObject();
+
+        try {
+            if (!control.isCheckable())
+                return;
+
+            // TODO: Is this the best way to do this?
+            if (control.isChecked() != checked)
+                control.click();
+        } catch (Exception e) {
+            Log.println(Log.ERROR, "UiObjectActionExecutor", "Error setting checked state on UiObject");
+        }
+    }
 }

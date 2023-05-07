@@ -24,4 +24,16 @@ public class UiObject2ActionExecutor implements UiActionExecutor {
         UiObject2 control = element.getUiObject2();
         return control.isChecked();
     }
+
+    @Override
+    public void setCheckedValue(TextBasedUiElement element, boolean checked) {
+        UiObject2 control = element.getUiObject2();
+
+        if (!control.isCheckable())
+            return;
+
+        // TODO: Is this the best way to do this?
+        if (control.isChecked() != checked)
+            control.click();
+    }
 }
