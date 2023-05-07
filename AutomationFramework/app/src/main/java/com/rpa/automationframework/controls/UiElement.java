@@ -14,13 +14,22 @@ import com.rpa.automationframework.internal.types.RawUiElementUnion;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public abstract class UiElement {
+    protected static Map<RawUiElementState, UiActionExecutor> executors;
+
+    static {
+        executors = new HashMap<>();
+        // TODO: Add all executors here.
+        // Maybe use reflection to register them?
+    }
+
     protected UiObject uiObject;
     protected UiObject2 uiObject2;
     protected RawUiElementState state = RawUiElementState.NONE;
     // TODO: Register all executors using reflection?
-    protected static Map<RawUiElementState, UiActionExecutor> executors = new HashMap<>();
+    protected Map<RawUiElementState, InternalObjectAssigner> assigners;
 
     public int index;
     public String resourceId;
@@ -28,31 +37,49 @@ public abstract class UiElement {
     public String packageName;
     public String description;
 
+    public UiElement() {
+        assigners = new HashMap<>();
+        assigners.put(RawUiElementState.UIOBJECT, new UiObjectAssigner());
+        assigners.put(RawUiElementState.UIOBJECT2, new UiObject2Assigner());
+    }
+
     public abstract boolean isInternalTypeAssignable(Class<?> internalType);
 
     /**
      * Tries to find the element by index.
      * <p>
      * There is only one element with a given index, so if we find one, we can stop.
+     *
      * @return True if the element was found, false otherwise.
      */
     public boolean tryFindByIndex() {
-        for (ControlFinder finder : Device.getInstance().controlFinders) {
-            Object element = finder.findByControlIndex(index).getPayload();
+        RawUiElementUnion lastValidElement = null;
 
-            if (element != null) {
-                if (element instanceof UiObject) {
-                    uiObject = (UiObject) element;
-                    state = RawUiElementState.UIOBJECT;
-                } else {
-                    uiObject2 = (UiObject2) element;
-                    state = RawUiElementState.UIOBJECT2;
-                }
-                break;
+        for (ControlFinder finder : Device.getInstance().controlFinders) {
+            RawUiElementUnion control = finder.findByControlIndex(index);
+            InternalObjectAssigner assigner = assigners.get(control.getState());
+            if (assigner == null) {
+                continue;
+            }
+
+            InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
+            if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+                // We have found the best candidate, so we can stop.
+                return true;
+            }
+
+            if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+                // The element does not have the valid type, but we can still use it.
+                lastValidElement = control;
             }
         }
 
-        if (!isValidType()) {
+        if (lastValidElement != null) {
+            InternalObjectAssigner assigner = assigners.get(lastValidElement.getState());
+            if (assigner != null) {
+                assigner.tryAssign(lastValidElement);
+            }
+
             Log.println(Log.WARN, "UiElement", "Defaulting to UiElement when searching for " + this.getClass().getSimpleName());
         }
 
@@ -65,10 +92,12 @@ public abstract class UiElement {
      * Each UI element has a class property, which is a string that represents the type of the element.
      * We try to find the element by the provided className. If we find one, we can stop.
      * Otherwise, we try to find the element by parts of the className.
+     *
      * @param className The type of the element, e.g. "android.widget.Button".
      * @return True if the element was found, false otherwise.
      */
     public boolean tryFindByClassName(String className) {
+        RawUiElementUnion lastValidElement = null;
         List<String> possibleNames = NameUtils.getClassNames(className);
 
         for (String name : possibleNames) {
@@ -76,24 +105,31 @@ public abstract class UiElement {
                 List<RawUiElementUnion> controls = finder.findByClassName(name);
 
                 for (RawUiElementUnion control : controls) {
-                    Object element = control.getPayload();
+                    InternalObjectAssigner assigner = assigners.get(control.getState());
+                    if (assigner == null) {
+                        continue;
+                    }
 
-                    if (element != null) {
-                        if (element instanceof UiObject) {
-                            uiObject = (UiObject) element;
-                            state = RawUiElementState.UIOBJECT;
-                        } else {
-                            uiObject2 = (UiObject2) element;
-                            state = RawUiElementState.UIOBJECT2;
-                        }
-                        break;
+                    InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
+                    if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+                        // We have found the best candidate, so we can stop.
+                        return true;
+                    }
+
+                    if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+                        // The element does not have the valid type, but we can still use it.
+                        lastValidElement = control;
                     }
                 }
             }
         }
 
-        // TODO: Move the type check up so that we match the proper ui element.
-        if (!isValidType()) {
+        if (lastValidElement != null) {
+            InternalObjectAssigner assigner = assigners.get(lastValidElement.getState());
+            if (assigner != null) {
+                assigner.tryAssign(lastValidElement);
+            }
+
             Log.println(Log.WARN, "UiElement", "Defaulting to UiElement when searching for " + this.getClass().getSimpleName());
         }
 
@@ -101,22 +137,33 @@ public abstract class UiElement {
     }
 
     public boolean tryFindByResourceId(String resourceId) {
-        for (ControlFinder finder : Device.getInstance().controlFinders) {
-            Object element = finder.findByResourceId(resourceId).getPayload();
+        RawUiElementUnion lastValidElement = null;
 
-            if (element != null) {
-                if (element instanceof UiObject) {
-                    uiObject = (UiObject) element;
-                    state = RawUiElementState.UIOBJECT;
-                } else {
-                    uiObject2 = (UiObject2) element;
-                    state = RawUiElementState.UIOBJECT2;
-                }
-                break;
+        for (ControlFinder finder : Device.getInstance().controlFinders) {
+            RawUiElementUnion control = finder.findByResourceId(resourceId);
+            InternalObjectAssigner assigner = assigners.get(control.getState());
+            if (assigner == null) {
+                continue;
+            }
+
+            InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
+            if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+                // We have found the best candidate, so we can stop.
+                return true;
+            }
+
+            if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+                // The element does not have the valid type, but we can still use it.
+                lastValidElement = control;
             }
         }
 
-        if (!isValidType()) {
+        if (lastValidElement != null) {
+            InternalObjectAssigner assigner = assigners.get(lastValidElement.getState());
+            if (assigner != null) {
+                assigner.tryAssign(lastValidElement);
+            }
+
             Log.println(Log.WARN, "UiElement", "Defaulting to UiElement when searching for " + this.getClass().getSimpleName());
         }
 
@@ -134,11 +181,19 @@ public abstract class UiElement {
     }
 
     public Class<?> getUiObjectType() {
-        return uiObject.getClass();
+        if (uiObject != null) {
+            return uiObject.getClass();
+        }
+
+        return null;
     }
 
     public Class<?> getUiObject2Type() {
-        return uiObject2.getClass();
+        if (uiObject2 != null) {
+            return uiObject2.getClass();
+        }
+
+        return null;
     }
 
     protected boolean isValidType() {
@@ -155,5 +210,53 @@ public abstract class UiElement {
         }
 
         return isInternalTypeAssignable(internalType);
+    }
+
+    protected interface InternalObjectAssigner {
+        enum AssignmentResult {
+            MATCHING, FALLBACK, FAILED
+        }
+
+        AssignmentResult tryAssign(RawUiElementUnion element);
+    }
+
+    private class UiObjectAssigner implements InternalObjectAssigner {
+        @Override
+        public AssignmentResult tryAssign(RawUiElementUnion element) {
+            Object payload = element.getPayload();
+
+            if (payload instanceof UiObject) {
+                uiObject = (UiObject) payload;
+                state = RawUiElementState.UIOBJECT;
+
+                if (isValidType()) {
+                    return AssignmentResult.MATCHING;
+                } else {
+                    return AssignmentResult.FALLBACK;
+                }
+            }
+
+            return AssignmentResult.FAILED;
+        }
+    }
+
+    private class UiObject2Assigner implements InternalObjectAssigner {
+        @Override
+        public AssignmentResult tryAssign(RawUiElementUnion element) {
+            Object payload = element.getPayload();
+
+            if (payload instanceof UiObject2) {
+                uiObject2 = (UiObject2) payload;
+                state = RawUiElementState.UIOBJECT2;
+
+                if (isValidType()) {
+                    return AssignmentResult.MATCHING;
+                } else {
+                    return AssignmentResult.FALLBACK;
+                }
+            }
+
+            return AssignmentResult.FAILED;
+        }
     }
 }

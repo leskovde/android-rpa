@@ -16,27 +16,36 @@ public abstract class TextBasedUiElement extends UiElement {
     public String text;
 
     public boolean tryFindByContent() {
+        RawUiElementUnion lastValidElement = null;
+
         for (ControlFinder finder : Device.getInstance().controlFinders) {
             List<RawUiElementUnion> controls = finder.findByTextContent(resourceId);
 
             for (RawUiElementUnion control : controls) {
-                Object element = control.getPayload();
+                InternalObjectAssigner assigner = assigners.get(control.getState());
+                if (assigner == null) {
+                    continue;
+                }
 
-                if (element != null) {
-                    if (element instanceof UiObject) {
-                        uiObject = (UiObject) element;
-                        state = RawUiElementState.UIOBJECT;
-                    } else {
-                        uiObject2 = (UiObject2) element;
-                        state = RawUiElementState.UIOBJECT2;
-                    }
-                    break;
+                InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
+                if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+                    // We have found the best candidate, so we can stop.
+                    return true;
+                }
+
+                if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+                    // The element does not have the valid type, but we can still use it.
+                    lastValidElement = control;
                 }
             }
         }
 
-        // TODO: Move the type check up so that we match the proper ui element.
-        if (!isValidType()) {
+        if (lastValidElement != null) {
+            InternalObjectAssigner assigner = assigners.get(lastValidElement.getState());
+            if (assigner != null) {
+                assigner.tryAssign(lastValidElement);
+            }
+
             Log.println(Log.WARN, "UiElement", "Defaulting to UiElement when searching for " + this.getClass().getSimpleName());
         }
 
