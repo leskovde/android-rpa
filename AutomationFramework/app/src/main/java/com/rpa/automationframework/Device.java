@@ -14,6 +14,7 @@ import com.rpa.automationframework.finders.BySelectorControlFinder;
 import com.rpa.automationframework.finders.ControlFinder;
 import com.rpa.automationframework.finders.UiSelectorControlFinder;
 import com.rpa.automationframework.internal.types.AbsoluteCoordinates;
+import com.rpa.automationframework.internal.types.Position;
 import com.rpa.automationframework.internal.types.RelativePosition;
 
 import java.util.ArrayList;
@@ -190,23 +191,11 @@ public final class Device {
         return height;
     }
 
-    public void click(AbsoluteCoordinates coordinates) {
-        uiDevice.click(coordinates.getX(), coordinates.getY());
-    }
-
-    public void click(RelativePosition position) {
+    public void click(Position position) {
         uiDevice.click(position.getX(), position.getY());
     }
 
-    public void longClick(AbsoluteCoordinates coordinates) {
-        int x = coordinates.getX();
-        int y = coordinates.getY();
-
-        // 100 steps takes about 0.5 seconds to complete.
-        uiDevice.swipe(x, y, x, y, 100);
-    }
-
-    public void longClick(RelativePosition position) {
+    public void longClick(Position position) {
         int x = position.getX();
         int y = position.getY();
 
@@ -214,7 +203,7 @@ public final class Device {
         uiDevice.swipe(x, y, x, y, 100);
     }
 
-    public void swipe(AbsoluteCoordinates from, AbsoluteCoordinates to) {
+    public void swipe(Position from, Position to) {
         // TODO: Check the speed of the scroll and adjust the steps.
         int steps = (int) (Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2)) + 1);
         uiDevice.swipe(from.getX(), from.getY(), to.getX(), to.getY(), steps);

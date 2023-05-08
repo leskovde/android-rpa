@@ -2,7 +2,7 @@ package com.rpa.automationframework.internal.types;
 
 import com.rpa.automationframework.Device;
 
-public class RelativePosition {
+public class RelativePosition implements Position {
     private final double x;
     private final double y;
 

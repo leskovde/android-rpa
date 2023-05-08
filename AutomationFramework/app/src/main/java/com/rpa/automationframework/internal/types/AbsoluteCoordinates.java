@@ -2,7 +2,7 @@ package com.rpa.automationframework.internal.types;
 
 import com.rpa.automationframework.Device;
 
-public class AbsoluteCoordinates {
+public class AbsoluteCoordinates implements Position {
     private final int x;
     private final int y;
 

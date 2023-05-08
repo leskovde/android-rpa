@@ -21,8 +21,8 @@
 - [x] Find UiElement by description
 - [x] Find UiElement by class name
 - [x] Find UiElement by index
-- [ ] Find UiElement by absolute position
-- [ ] Find UiElement by relative position
+- [x] Find UiElement by absolute position
+- [x] Find UiElement by relative position
 - [x] Get text from TextBasedUiElement
 - [x] Get checked value from CheckableUiElement
 - [ ] Get image from ImageBasedUiElement

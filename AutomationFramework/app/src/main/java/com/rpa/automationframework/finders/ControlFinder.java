@@ -16,5 +16,5 @@ public interface ControlFinder {
 
     public List<RawUiElementUnion> findByTextContent(String content);
 
-
+    public RawUiElementUnion findByPosition(int x, int y);
 }
