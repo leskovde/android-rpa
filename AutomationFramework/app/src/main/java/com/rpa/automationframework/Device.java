@@ -12,6 +12,7 @@ import com.rpa.automationframework.finders.BySelectorControlFinder;
 import com.rpa.automationframework.finders.ControlFinder;
 import com.rpa.automationframework.finders.UiSelectorControlFinder;
 import com.rpa.automationframework.internal.types.AbsoluteCoordinates;
+import com.rpa.automationframework.internal.types.RelativePosition;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -191,9 +192,21 @@ public final class Device {
         uiDevice.click(coordinates.getX(), coordinates.getY());
     }
 
+    public void click(RelativePosition position) {
+        uiDevice.click(position.getX(), position.getY());
+    }
+
     public void longClick(AbsoluteCoordinates coordinates) {
         int x = coordinates.getX();
         int y = coordinates.getY();
+
+        // 100 steps takes about 0.5 seconds to complete.
+        uiDevice.swipe(x, y, x, y, 100);
+    }
+
+    public void longClick(RelativePosition position) {
+        int x = position.getX();
+        int y = position.getY();
 
         // 100 steps takes about 0.5 seconds to complete.
         uiDevice.swipe(x, y, x, y, 100);
