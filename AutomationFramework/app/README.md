@@ -32,9 +32,9 @@
 - [x] Long click on UiElement
 - [x] Click on absolute position
 - [x] Long click on absolute position
-- [ ] Click on relative position
-- [ ] Long click on relative position
-- [ ] Swipe vertically from position
-- [ ] Swipe horizontally from position
+- [x] Click on relative position
+- [x] Long click on relative position
+- [x] Swipe vertically from position
+- [x] Swipe horizontally from position
 - [x] Press SW buttons (menu, back, home)
 - [x] Press HW buttons (volume up, volume down, power)

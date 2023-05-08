@@ -7,6 +7,8 @@ import android.view.KeyEvent;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiSelector;
 
 import com.rpa.automationframework.finders.BySelectorControlFinder;
 import com.rpa.automationframework.finders.ControlFinder;
@@ -210,5 +212,11 @@ public final class Device {
 
         // 100 steps takes about 0.5 seconds to complete.
         uiDevice.swipe(x, y, x, y, 100);
+    }
+
+    public void swipe(AbsoluteCoordinates from, AbsoluteCoordinates to) {
+        // TODO: Check the speed of the scroll and adjust the steps.
+        int steps = (int) (Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2)) + 1);
+        uiDevice.swipe(from.getX(), from.getY(), to.getX(), to.getY(), steps);
     }
 }
