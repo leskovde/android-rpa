@@ -3,13 +3,13 @@
 1. Define the control
     - Use the controls constructor to set the relevant search properties
     - e.g. `textEdit = new TextEdit() { text = "Hello World" }`
-   
+
 2. Find the control
     - Use the `tryFind()` method to find the control
-      - Matches all (or some) of the search properties
+        - Matches all (or some) of the search properties
     - e.g. `textEdit.tryFind()`
     - Use a specific search method:
-      - `textEdit.tryFindByDescription()`
+        - `textEdit.tryFindByDescription()`
 
 3. Interact with the control
     - `click()`, ...
@@ -28,10 +28,10 @@
 - [ ] Get image from ImageBasedUiElement
 - [ ] Edit text in TextBasedUiElement
 - [x] Change checked value in CheckableUiElement
-- [ ] Click on UiElement
-- [ ] Long click on UiElement
-- [ ] Click on absolute position
-- [ ] Long click on absolute position
+- [x] Click on UiElement
+- [x] Long click on UiElement
+- [x] Click on absolute position
+- [x] Long click on absolute position
 - [ ] Click on relative position
 - [ ] Long click on relative position
 - [ ] Swipe vertically from position

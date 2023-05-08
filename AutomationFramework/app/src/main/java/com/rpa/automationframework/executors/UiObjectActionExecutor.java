@@ -57,4 +57,26 @@ public class UiObjectActionExecutor implements UiActionExecutor {
             Log.println(Log.ERROR, "UiObjectActionExecutor", "Error setting checked state on UiObject");
         }
     }
+
+    @Override
+    public void click(UiElement element) {
+        UiObject control = element.getUiObject();
+
+        try {
+            control.click();
+        } catch (Exception e) {
+            Log.println(Log.ERROR, "UiObjectActionExecutor", "Error clicking UiObject");
+        }
+    }
+
+    @Override
+    public void longClick(UiElement element) {
+        UiObject control = element.getUiObject();
+
+        try {
+            control.longClick();
+        } catch (Exception e) {
+            Log.println(Log.ERROR, "UiObjectActionExecutor", "Error long clicking UiObject");
+        }
+    }
 }

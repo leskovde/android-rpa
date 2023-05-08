@@ -242,6 +242,16 @@ public abstract class UiElement {
         executor.click(this);
     }
 
+    public void longClick() {
+        UiActionExecutor executor = executors.get(state);
+
+        if (executor == null) {
+            throw new RuntimeException("No executor found for state: " + state);
+        }
+
+        executor.longClick(this);
+    }
+
     protected boolean isValidType() {
         UiActionExecutor executor = executors.get(state);
 

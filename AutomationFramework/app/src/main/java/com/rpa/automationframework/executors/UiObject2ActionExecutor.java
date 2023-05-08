@@ -36,4 +36,16 @@ public class UiObject2ActionExecutor implements UiActionExecutor {
         if (control.isChecked() != checked)
             control.click();
     }
+
+    @Override
+    public void click(UiElement element) {
+        UiObject2 control = element.getUiObject2();
+        control.click();
+    }
+
+    @Override
+    public void longClick(UiElement element) {
+        UiObject2 control = element.getUiObject2();
+        control.longClick();
+    }
 }

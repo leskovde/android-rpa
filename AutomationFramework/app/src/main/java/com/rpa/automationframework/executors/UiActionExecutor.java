@@ -5,12 +5,7 @@ import com.rpa.automationframework.controls.UiElement;
 
 import kotlin.NotImplementedError;
 
-// TODO: Remove default.
 public interface UiActionExecutor {
-    default void click(UiElement element) {
-        throw new NotImplementedError();
-    }
-
     Class<?> getInternalType(UiElement element);
 
     String getText(TextBasedUiElement element);
@@ -18,4 +13,8 @@ public interface UiActionExecutor {
     boolean isChecked(TextBasedUiElement element);
 
     void setCheckedValue(TextBasedUiElement element, boolean checked);
+
+    void click(UiElement element);
+
+    void longClick(UiElement element);
 }

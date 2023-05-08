@@ -11,6 +11,7 @@ import androidx.test.uiautomator.UiDevice;
 import com.rpa.automationframework.finders.BySelectorControlFinder;
 import com.rpa.automationframework.finders.ControlFinder;
 import com.rpa.automationframework.finders.UiSelectorControlFinder;
+import com.rpa.automationframework.internal.types.AbsoluteCoordinates;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +19,8 @@ import java.util.List;
 
 public final class Device {
     private final UiDevice uiDevice;
+    private int width;
+    private int height;
     public List<ControlFinder> controlFinders;
 
     private Device() {
@@ -164,5 +167,35 @@ public final class Device {
         }
 
         pressPower();
+    }
+
+    // TODO: Does rotation play a role in this?
+    public int getDisplayWidth() {
+        if (width == 0) {
+            width = uiDevice.getDisplayWidth();
+        }
+
+        return width;
+    }
+
+    // TODO: Does rotation play a role in this?
+    public int getDisplayHeight() {
+        if (height == 0) {
+            height = uiDevice.getDisplayHeight();
+        }
+
+        return height;
+    }
+
+    public void click(AbsoluteCoordinates coordinates) {
+        uiDevice.click(coordinates.getX(), coordinates.getY());
+    }
+
+    public void longClick(AbsoluteCoordinates coordinates) {
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+
+        // 100 steps takes about 0.5 seconds to complete.
+        uiDevice.swipe(x, y, x, y, 100);
     }
 }
