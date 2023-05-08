@@ -6,9 +6,10 @@ import androidx.test.uiautomator.*;
 
 import com.rpa.automationframework.Device;
 import com.rpa.automationframework.executors.UiActionExecutor;
+import com.rpa.automationframework.executors.UiObject2ActionExecutor;
+import com.rpa.automationframework.executors.UiObjectActionExecutor;
 import com.rpa.automationframework.finders.ControlFinder;
 import com.rpa.automationframework.internal.helper.NameUtils;
-import com.rpa.automationframework.internal.types.AbsoluteCoordinates;
 import com.rpa.automationframework.internal.types.Position;
 import com.rpa.automationframework.internal.types.RawUiElementState;
 import com.rpa.automationframework.internal.types.RawUiElementUnion;
@@ -16,15 +17,15 @@ import com.rpa.automationframework.internal.types.RawUiElementUnion;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public abstract class UiElement {
     protected static Map<RawUiElementState, UiActionExecutor> executors;
 
     static {
         executors = new HashMap<>();
-        // TODO: Add all executors here.
-        // Maybe use reflection to register them?
+        executors.put(RawUiElementState.UIOBJECT, new UiObjectActionExecutor());
+        executors.put(RawUiElementState.UIOBJECT2, new UiObject2ActionExecutor());
+        // TODO: Maybe use reflection to register them?
     }
 
     protected UiObject uiObject;
@@ -32,12 +33,6 @@ public abstract class UiElement {
     protected RawUiElementState state = RawUiElementState.NONE;
     // TODO: Register all executors using reflection?
     protected Map<RawUiElementState, InternalObjectAssigner> assigners;
-
-    public int index;
-    public String resourceId;
-    public String className;
-    public String packageName;
-    public String description;
 
     public UiElement() {
         assigners = new HashMap<>();
@@ -78,7 +73,7 @@ public abstract class UiElement {
      *
      * @return True if the element was found, false otherwise.
      */
-    public boolean tryFindByIndex() {
+    public boolean tryFindByIndex(int index) {
         RawUiElementUnion lastValidElement = null;
 
         for (ControlFinder finder : Device.getInstance().controlFinders) {

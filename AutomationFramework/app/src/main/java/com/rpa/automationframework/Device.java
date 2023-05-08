@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.uiautomator.Direction;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
+import androidx.test.uiautomator.Until;
 
 import com.rpa.automationframework.finders.BySelectorControlFinder;
 import com.rpa.automationframework.finders.ControlFinder;
@@ -72,6 +74,7 @@ public final class Device {
 
     public void pressBack() {
         pressBack(1);
+        uiDevice.waitForIdle();
     }
 
     public void pressHome(int numberOfTries) {
@@ -101,6 +104,7 @@ public final class Device {
 
     public void pressHome() {
         uiDevice.pressHome();
+        uiDevice.waitForIdle();
     }
 
     public void pressRecentApps(int numberOfTries) {
@@ -135,6 +139,7 @@ public final class Device {
 
     public void pressRecentApps() {
         pressRecentApps(1);
+        uiDevice.waitForIdle();
     }
 
     public void pressVolumeUp() {
@@ -147,6 +152,7 @@ public final class Device {
 
     public void pressPower() {
         uiDevice.pressKeyCode(KeyEvent.KEYCODE_POWER);
+        uiDevice.waitForIdle();
     }
 
     public void lockScreen() {
@@ -159,6 +165,7 @@ public final class Device {
         }
 
         pressPower();
+        uiDevice.waitForIdle();
     }
 
     public void unlockScreen() {
@@ -171,6 +178,7 @@ public final class Device {
         }
 
         pressPower();
+        uiDevice.waitForIdle();
     }
 
     // TODO: Does rotation play a role in this?
@@ -204,8 +212,8 @@ public final class Device {
     }
 
     public void swipe(Position from, Position to) {
-        // TODO: Check the speed of the scroll and adjust the steps.
-        int steps = (int) (Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2)) + 1);
+        int steps = (int) (Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2)) / 100 + 1);
         uiDevice.swipe(from.getX(), from.getY(), to.getX(), to.getY(), steps);
+        uiDevice.waitForIdle();
     }
 }

@@ -14,11 +14,11 @@ import com.rpa.automationframework.internal.types.RawUiElementUnion;
 import java.util.List;
 
 public abstract class TextBasedUiElement extends UiElement {
-    public boolean tryFindByContent() {
+    public boolean tryFindByContent(String content) {
         RawUiElementUnion lastValidElement = null;
 
         for (ControlFinder finder : Device.getInstance().controlFinders) {
-            List<RawUiElementUnion> controls = finder.findByTextContent(resourceId);
+            List<RawUiElementUnion> controls = finder.findByTextContent(content);
 
             for (RawUiElementUnion control : controls) {
                 InternalObjectAssigner assigner = assigners.get(control.getState());
