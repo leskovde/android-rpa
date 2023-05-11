@@ -42,23 +42,8 @@ public abstract class UiElement {
 
     protected abstract boolean isInternalTypeAssignable(String internalType);
 
-    public Class<?> getUiObjectType() {
-        if (uiObject != null) {
-            return uiObject.getClass();
-        }
-
-        return null;
-    }
-
-    public Class<?> getUiObject2Type() {
-        if (uiObject2 != null) {
-            return uiObject2.getClass();
-        }
-
-        return null;
-    }
-
     public UiObject getUiObject() {
+        uiObject.waitForExists(1000);
         return uiObject;
     }
 

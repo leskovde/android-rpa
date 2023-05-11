@@ -3,8 +3,6 @@ package com.rpa.automationframework.executors;
 import com.rpa.automationframework.controls.TextBasedUiElement;
 import com.rpa.automationframework.controls.UiElement;
 
-import kotlin.NotImplementedError;
-
 public interface UiActionExecutor {
     String getInternalType(UiElement element);
 
@@ -17,4 +15,6 @@ public interface UiActionExecutor {
     void click(UiElement element);
 
     void longClick(UiElement element);
+
+    void setText(TextBasedUiElement element, String text);
 }

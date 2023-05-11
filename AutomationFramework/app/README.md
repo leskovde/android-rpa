@@ -26,7 +26,7 @@
 - [x] Get text from TextBasedUiElement
 - [x] Get checked value from CheckableUiElement
 - [ ] Get image from ImageBasedUiElement
-- [ ] Edit text in TextBasedUiElement
+- [x] Edit text in TextBasedUiElement
 - [x] Change checked value in CheckableUiElement
 - [x] Click on UiElement
 - [x] Long click on UiElement

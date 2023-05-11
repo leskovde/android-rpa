@@ -1,5 +1,7 @@
 package com.rpa.automationframework.controls;
 
+import com.rpa.automationframework.executors.UiActionExecutor;
+
 public class TextEdit extends TextBasedUiElement {
 
     @Override
@@ -7,9 +9,16 @@ public class TextEdit extends TextBasedUiElement {
         if (internalType.toLowerCase().contains("edittext"))
             return true;
 
-        if (internalType.toLowerCase().contains("autocomplete"))
-            return true;
+        return internalType.toLowerCase().contains("autocomplete");
+    }
 
-        return false;
+    public void setText(String text) {
+        UiActionExecutor executor = executors.get(state);
+
+        if (executor == null) {
+            throw new RuntimeException("No executor found for state: " + state);
+        }
+
+        executor.setText(this, text);
     }
 }

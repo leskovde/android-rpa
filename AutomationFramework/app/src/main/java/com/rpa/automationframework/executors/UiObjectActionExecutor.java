@@ -27,7 +27,7 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         String text = "";
 
         try {
-            control.getText();
+            return control.getText();
         } catch (Exception e) {
             Log.println(Log.ERROR, "UiObjectActionExecutor", "Error getting text from UiObject");
         }
@@ -53,12 +53,10 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         UiObject control = element.getUiObject();
 
         try {
-            if (!control.isCheckable())
-                return;
+            if (!control.isCheckable()) return;
 
             // TODO: Is this the best way to do this?
-            if (control.isChecked() != checked)
-                control.click();
+            if (control.isChecked() != checked) control.click();
         } catch (Exception e) {
             Log.println(Log.ERROR, "UiObjectActionExecutor", "Error setting checked state on UiObject");
         }
@@ -83,6 +81,17 @@ public class UiObjectActionExecutor implements UiActionExecutor {
             control.longClick();
         } catch (Exception e) {
             Log.println(Log.ERROR, "UiObjectActionExecutor", "Error long clicking UiObject");
+        }
+    }
+
+    @Override
+    public void setText(TextBasedUiElement element, String text) {
+        UiObject control = element.getUiObject();
+
+        try {
+            control.setText(text);
+        } catch (Exception e) {
+            Log.println(Log.ERROR, "UiObjectActionExecutor", "Error setting text on UiObject");
         }
     }
 }

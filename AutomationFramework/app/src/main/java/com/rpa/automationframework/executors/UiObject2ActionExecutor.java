@@ -48,4 +48,10 @@ public class UiObject2ActionExecutor implements UiActionExecutor {
         UiObject2 control = element.getUiObject2();
         control.longClick();
     }
+
+    @Override
+    public void setText(TextBasedUiElement element, String text) {
+        UiObject2 control = element.getUiObject2();
+        control.setText(text);
+    }
 }
