@@ -11,8 +11,14 @@ import com.rpa.automationframework.controls.UiElement;
 public class UiObjectActionExecutor implements UiActionExecutor {
 
     @Override
-    public Class<?> getInternalType(UiElement element) {
-        return element.getUiObjectType();
+    public String getInternalType(UiElement element) {
+        try {
+            return element.getUiObject().getClassName();
+        } catch (Exception e) {
+            Log.println(Log.ERROR, "UiObjectActionExecutor", "Error getting internal type from UiObject");
+        }
+
+        return null;
     }
 
     @Override

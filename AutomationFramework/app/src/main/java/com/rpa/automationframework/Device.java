@@ -216,4 +216,12 @@ public final class Device {
         uiDevice.swipe(from.getX(), from.getY(), to.getX(), to.getY(), steps);
         uiDevice.waitForIdle();
     }
+
+    public void idle(long ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (Exception e) {
+            Log.println(Log.ERROR, "Device", "Failed to idle: " + e.getMessage());
+        }
+    }
 }

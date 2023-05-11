@@ -40,7 +40,7 @@ public abstract class UiElement {
         assigners.put(RawUiElementState.UIOBJECT2, new UiObject2Assigner());
     }
 
-    protected abstract boolean isInternalTypeAssignable(Class<?> internalType);
+    protected abstract boolean isInternalTypeAssignable(String internalType);
 
     public Class<?> getUiObjectType() {
         if (uiObject != null) {
@@ -290,7 +290,7 @@ public abstract class UiElement {
             throw new RuntimeException("No executor found for state: " + state);
         }
 
-        Class<?> internalType = executor.getInternalType(this);
+        String internalType = executor.getInternalType(this);
 
         if (internalType == null) {
             throw new RuntimeException("No internal type found for state: " + state);

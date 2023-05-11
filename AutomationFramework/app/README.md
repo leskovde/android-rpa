@@ -38,3 +38,8 @@
 - [x] Swipe horizontally from position
 - [x] Press SW buttons (menu, back, home)
 - [x] Press HW buttons (volume up, volume down, power)
+
+## Bug fixes
+
+- [x] getClass returns UiObject, getClassName returns the proper class name, but as a string... Rewrite the type compatibility check to use the string.
+- [ ] Open app drawer

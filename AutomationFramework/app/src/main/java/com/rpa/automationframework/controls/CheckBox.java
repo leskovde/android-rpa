@@ -24,7 +24,16 @@ public class CheckBox extends TextBasedUiElement {
     }
 
     @Override
-    protected boolean isInternalTypeAssignable(Class<?> internalType) {
+    protected boolean isInternalTypeAssignable(String internalType) {
+        if (internalType.toLowerCase().contains("checkbox"))
+            return true;
+
+        if (internalType.toLowerCase().contains("switch"))
+            return true;
+
+        if (internalType.toLowerCase().contains("togglebutton"))
+            return true;
+
         return false;
     }
 }

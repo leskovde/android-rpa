@@ -9,8 +9,8 @@ import com.rpa.automationframework.controls.UiElement;
 public class UiObject2ActionExecutor implements UiActionExecutor {
 
     @Override
-    public Class<?> getInternalType(UiElement element) {
-        return element.getUiObject2Type();
+    public String getInternalType(UiElement element) {
+        return element.getUiObject2().getClassName();
     }
 
     @Override

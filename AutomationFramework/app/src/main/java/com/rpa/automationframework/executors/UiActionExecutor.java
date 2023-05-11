@@ -6,7 +6,7 @@ import com.rpa.automationframework.controls.UiElement;
 import kotlin.NotImplementedError;
 
 public interface UiActionExecutor {
-    Class<?> getInternalType(UiElement element);
+    String getInternalType(UiElement element);
 
     String getText(TextBasedUiElement element);
 
