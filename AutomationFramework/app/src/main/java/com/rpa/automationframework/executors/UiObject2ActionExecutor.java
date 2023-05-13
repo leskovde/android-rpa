@@ -1,9 +1,15 @@
 package com.rpa.automationframework.executors;
 
+import android.graphics.Bitmap;
+import android.graphics.Rect;
+
+import androidx.test.services.events.TimeStamp;
 import androidx.test.uiautomator.UiObject2;
 
+import com.rpa.automationframework.Device;
 import com.rpa.automationframework.controls.TextBasedUiElement;
 import com.rpa.automationframework.controls.UiElement;
+import com.rpa.automationframework.internal.helper.ImageUtils;
 
 // TODO: I should check whether the incoming UiObject2 exists.
 public class UiObject2ActionExecutor implements UiActionExecutor {
@@ -53,5 +59,14 @@ public class UiObject2ActionExecutor implements UiActionExecutor {
     public void setText(TextBasedUiElement element, String text) {
         UiObject2 control = element.getUiObject2();
         control.setText(text);
+    }
+
+    @Override
+    public Bitmap getImage(UiElement element) {
+        UiObject2 control = element.getUiObject2();
+        Rect bounds = control.getVisibleBounds();
+
+        Bitmap screenShot = Device.getInstance().takeScreenshot(ImageUtils.getImageName(element));
+        return Bitmap.createBitmap(screenShot, bounds.left, bounds.top, bounds.width(), bounds.height());
     }
 }

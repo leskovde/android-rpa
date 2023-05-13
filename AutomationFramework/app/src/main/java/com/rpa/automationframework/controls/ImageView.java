@@ -4,6 +4,6 @@ public class ImageView extends ImageBasedUiElement {
 
     @Override
     protected boolean isInternalTypeAssignable(String internalType) {
-        return internalType.toLowerCase().contains("imageview");
+        return internalType.toLowerCase().contains("image");
     }
 }

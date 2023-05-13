@@ -1,24 +1,21 @@
 package com.rpa.automationframework;
 
 import android.app.Instrumentation;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.KeyEvent;
 
 import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.uiautomator.Direction;
 import androidx.test.uiautomator.UiDevice;
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiSelector;
-import androidx.test.uiautomator.Until;
 
 import com.rpa.automationframework.finders.BySelectorControlFinder;
 import com.rpa.automationframework.finders.ControlFinder;
 import com.rpa.automationframework.finders.UiSelectorControlFinder;
-import com.rpa.automationframework.internal.types.AbsoluteCoordinates;
 import com.rpa.automationframework.internal.types.Position;
-import com.rpa.automationframework.internal.types.RelativePosition;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -157,28 +154,22 @@ public final class Device {
 
     public void lockScreen() {
         try {
-            if (!uiDevice.isScreenOn()) {
-                return;
-            }
+            uiDevice.sleep();
         } catch (RemoteException e) {
-            throw new RuntimeException("Failed to check if screen is on: " + e.getMessage());
+            throw new RuntimeException("Failed to lock the screen: " + e.getMessage());
         }
 
-        pressPower();
         uiDevice.waitForIdle();
     }
 
     public void unlockScreen() {
         try {
-            if (uiDevice.isScreenOn()) {
-                return;
-            }
+            uiDevice.wakeUp();
         } catch (RemoteException e) {
-            throw new RuntimeException("Failed to check if screen is on: " + e.getMessage());
+            throw new RuntimeException("Failed to unlock the screen: " + e.getMessage());
         }
 
-        pressPower();
-        uiDevice.waitForIdle();
+        // An idle wait is automatically inserted by wakeUp().
     }
 
     // TODO: Does rotation play a role in this?
@@ -223,5 +214,16 @@ public final class Device {
         } catch (Exception e) {
             Log.println(Log.ERROR, "Device", "Failed to idle: " + e.getMessage());
         }
+    }
+
+    public Bitmap takeScreenshot(String filename) {
+        if (!uiDevice.takeScreenshot(new File(filename))) {
+            Log.println(Log.ERROR, "Device", "Failed to take screenshot");
+            return null;
+        }
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        return BitmapFactory.decodeFile(filename, options);
     }
 }

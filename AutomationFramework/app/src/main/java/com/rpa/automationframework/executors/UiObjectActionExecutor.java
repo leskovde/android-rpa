@@ -1,11 +1,17 @@
 package com.rpa.automationframework.executors;
 
+import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.util.Log;
 
+import androidx.test.services.events.TimeStamp;
 import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObject2;
 
+import com.rpa.automationframework.Device;
 import com.rpa.automationframework.controls.TextBasedUiElement;
 import com.rpa.automationframework.controls.UiElement;
+import com.rpa.automationframework.internal.helper.ImageUtils;
 
 // TODO: I should check whether the incoming UiObject exists.
 public class UiObjectActionExecutor implements UiActionExecutor {
@@ -93,5 +99,20 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         } catch (Exception e) {
             Log.println(Log.ERROR, "UiObjectActionExecutor", "Error setting text on UiObject");
         }
+    }
+
+    @Override
+    public Bitmap getImage(UiElement element) {
+        UiObject control = element.getUiObject();
+        Rect bounds;
+        try {
+            bounds = control.getBounds();
+        } catch (Exception e) {
+            Log.println(Log.ERROR, "UiObjectActionExecutor", "Error getting bounds from UiObject");
+            return null;
+        }
+
+        Bitmap screenShot = Device.getInstance().takeScreenshot(ImageUtils.getImageName(element));
+        return Bitmap.createBitmap(screenShot, bounds.left, bounds.top, bounds.width(), bounds.height());
     }
 }
