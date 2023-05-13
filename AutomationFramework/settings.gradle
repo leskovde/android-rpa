@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "AutomationFramework"
-include ':app'
-include ':uielementshowcase'
+include ':automation-framework'
+include ':ui-element-showcase'
