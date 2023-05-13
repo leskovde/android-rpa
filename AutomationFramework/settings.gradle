@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "AutomationFramework"
 include ':automation-framework'
 include ':ui-element-showcase'
+include ':waw-interpreter'
