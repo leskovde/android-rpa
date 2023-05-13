@@ -25,7 +25,7 @@
 - [x] Find UiElement by relative position
 - [x] Get text from TextBasedUiElement
 - [x] Get checked value from CheckableUiElement
-- [ ] Get image from ImageBasedUiElement
+- [x] Get image from ImageBasedUiElement
 - [x] Edit text in TextBasedUiElement
 - [x] Change checked value in CheckableUiElement
 - [x] Click on UiElement
@@ -42,4 +42,4 @@
 ## Bug fixes
 
 - [x] getClass returns UiObject, getClassName returns the proper class name, but as a string... Rewrite the type compatibility check to use the string.
-- [ ] Open app drawer
+- [x] Open app drawer

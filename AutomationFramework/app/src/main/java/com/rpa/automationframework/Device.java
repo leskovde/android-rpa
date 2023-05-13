@@ -14,6 +14,7 @@ import com.rpa.automationframework.finders.BySelectorControlFinder;
 import com.rpa.automationframework.finders.ControlFinder;
 import com.rpa.automationframework.finders.UiSelectorControlFinder;
 import com.rpa.automationframework.internal.types.Position;
+import com.rpa.automationframework.internal.types.RelativePosition;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -225,5 +226,20 @@ public final class Device {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         return BitmapFactory.decodeFile(filename, options);
+    }
+
+    public void openAppDrawer() {
+        pressHome();
+        swipe(new RelativePosition(0.5, 1.0), new RelativePosition(0.5, 0.5));
+    }
+
+    public void openNotifications() {
+        try {
+            if (!uiDevice.openNotification()) {
+                Log.println(Log.ERROR, "Device", "Failed to open notifications");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to open notifications: " + e.getMessage());
+        }
     }
 }
