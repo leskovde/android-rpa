@@ -43,4 +43,10 @@ public class WhatSequence {
             actions.add(action);
         }
     }
+
+    public void execute() {
+        for (Action action : actions) {
+            action.execute();
+        }
+    }
 }

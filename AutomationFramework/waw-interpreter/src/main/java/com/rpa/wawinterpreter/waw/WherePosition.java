@@ -47,4 +47,26 @@ public class WherePosition {
             this.selectors.add(SelectorFactory.create(selector));
         }
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBefore() {
+        return before;
+    }
+
+    public String getAfter() {
+        return after;
+    }
+
+    public boolean matchesCurrentState() {
+        boolean matches = true;
+
+        for (Selector selector : selectors) {
+            matches = matches && (selector.getUiElement() != null);
+        }
+
+        return matches;
+    }
 }

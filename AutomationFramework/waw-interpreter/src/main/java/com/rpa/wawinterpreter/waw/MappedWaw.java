@@ -74,4 +74,20 @@ public class MappedWaw {
             workflow.addActionSequence(whereParsed, whatParsed);
         }
     }
+
+    public String getName() {
+        return metadata.getName();
+    }
+
+    public String getDescription() {
+        return metadata.getDescription();
+    }
+
+    public void run() {
+        String state = workflow.getInitialState();
+
+        while ((state = workflow.getNextState()) != null) {
+            workflow.run(state);
+        }
+    }
 }

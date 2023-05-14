@@ -14,13 +14,20 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 public class SelectorFactory {
-    public static Selector create(JSONObject selector, TypeNames type) {
+    public static Selector create(JSONObject selector) {
         SelectorNames selectorName = getSelectorName(selector);
         String parameter;
         try {
             parameter = selector.getString(selectorName.name());
         } catch (Exception e) {
             throw new RuntimeException("Selector must have a parameter");
+        }
+
+        TypeNames type;
+        try {
+            type = TypeNames.valueOf(selector.getString("type"));
+        } catch (Exception e) {
+            throw new RuntimeException("Selector must have a valid type");
         }
 
         return switch (selectorName) {
