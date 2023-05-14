@@ -1,6 +1,7 @@
 package com.rpa.wawinterpreter.waw;
 
 import com.rpa.wawinterpreter.waw.factories.SelectorFactory;
+import com.rpa.wawinterpreter.waw.internal.helper.ParserHelper;
 import com.rpa.wawinterpreter.waw.selectors.Selector;
 
 import org.json.JSONArray;
@@ -29,23 +30,7 @@ public class WherePosition {
             this.after = null;
         }
 
-        JSONArray selectors;
-        try {
-            selectors = wherePosition.getJSONArray("selectors");
-        } catch (Exception e) {
-            throw new RuntimeException("WherePosition must have a selectors array");
-        }
-
-        for (int i = 0; i < selectors.length(); i++) {
-            JSONObject selector;
-            try {
-                selector = selectors.getJSONObject(i);
-            } catch (Exception e) {
-                throw new RuntimeException("Selectors in 'where' must be JSON objects");
-            }
-
-            this.selectors.add(SelectorFactory.create(selector));
-        }
+        this.selectors = ParserHelper.parseSelectors(wherePosition);
     }
 
     public String getId() {

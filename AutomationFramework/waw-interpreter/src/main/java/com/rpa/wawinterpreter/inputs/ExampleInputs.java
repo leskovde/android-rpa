@@ -22,19 +22,33 @@ where:
 what:
     - action:
         - click
+            - selector
         - longClick
+            - selector
         - swipe
+            - fromPosition
+            - toPosition
         - idle
+            - duration (int)
         - getText
+            - selector
+            - variable
         - getValue
+            - selector
+            - variable
         - getImage
+            - selector
+            - path
         - setText
+            - selector
+            - text
+            - variable
         - setValue
+            - selector
+            - value (boolean)
     - params:
-        - position
         - text
         - value
-        - swipe direction
         - selector
 
  */
@@ -61,9 +75,9 @@ public class ExampleInputs {
             			"what": [
             			        {
                                     "action": "idle",
-                                    "args": [
-                                        1000
-                                    ]
+                                    "args": {
+                                        "duration": 1000
+                                    }
                                 }
             			]
             		},

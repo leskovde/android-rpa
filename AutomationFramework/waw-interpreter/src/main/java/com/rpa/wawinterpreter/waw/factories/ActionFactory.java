@@ -13,9 +13,10 @@ import com.rpa.wawinterpreter.waw.actions.SetValueAction;
 import com.rpa.wawinterpreter.waw.actions.SwipeAction;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class ActionFactory {
-    public static Action getAction(ActionNames action, JSONArray parameters) {
+    public static Action getAction(ActionNames action, JSONObject parameters) {
         return switch (action) {
             case CLICK -> new ClickAction(parameters);
             case LONG_CLICK -> new LongClickAction(parameters);

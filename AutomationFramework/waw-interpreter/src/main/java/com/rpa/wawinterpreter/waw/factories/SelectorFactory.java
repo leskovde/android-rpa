@@ -3,6 +3,7 @@ package com.rpa.wawinterpreter.waw.factories;
 import com.rpa.wawinterpreter.waw.selectors.ClassNameSelector;
 import com.rpa.wawinterpreter.waw.selectors.DescriptionSelector;
 import com.rpa.wawinterpreter.waw.selectors.IndexSelector;
+import com.rpa.wawinterpreter.waw.selectors.PositionSelector;
 import com.rpa.wawinterpreter.waw.selectors.ResIdSelector;
 import com.rpa.wawinterpreter.waw.selectors.SelectorNames;
 import com.rpa.wawinterpreter.waw.selectors.Selector;
@@ -36,6 +37,7 @@ public class SelectorFactory {
             case CLASS_NAME -> new ClassNameSelector(parameter, type);
             case DESC -> new DescriptionSelector(parameter, type);
             case TEXT -> new TextSelector(parameter, type);
+            case POSITION -> new PositionSelector(parameter, type);
         };
     }
 

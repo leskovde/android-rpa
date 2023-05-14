@@ -32,9 +32,9 @@ public class WhatSequence {
                 throw new RuntimeException("The workflow item does not contain a valid action name", e);
             }
 
-            JSONArray parameters;
+            JSONObject parameters;
             try {
-                parameters = whatItem.getJSONArray("args");
+                parameters = whatItem.getJSONObject("args");
             } catch (JSONException e) {
                 throw new RuntimeException("The provided WAW input contains a 'what' item that does not contain an 'args' array", e);
             }

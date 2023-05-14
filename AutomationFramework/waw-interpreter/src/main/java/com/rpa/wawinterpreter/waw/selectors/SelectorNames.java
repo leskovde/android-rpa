@@ -6,4 +6,5 @@ public enum SelectorNames {
     CLASS_NAME,
     DESC,
     TEXT,
+    POSITION
 }

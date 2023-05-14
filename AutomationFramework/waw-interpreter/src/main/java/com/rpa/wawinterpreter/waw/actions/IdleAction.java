@@ -1,20 +1,22 @@
 package com.rpa.wawinterpreter.waw.actions;
 
-import com.rpa.wawinterpreter.waw.selectors.Selector;
+import com.rpa.automationframework.Device;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class IdleAction implements Action {
-    public IdleAction(JSONArray parameters) {
+public class IdleAction extends Action {
+    private final int idleTime;
+
+    public IdleAction(JSONObject parameters) {
+        try {
+            this.idleTime = parameters.getInt("duration");
+        } catch (Exception e) {
+            throw new RuntimeException("Idle action requires a valid duration");
+        }
     }
 
     @Override
     public void execute() {
-
-    }
-
-    @Override
-    public Selector getSelector() {
-        return null;
+        Device.getInstance().idle(idleTime);
     }
 }

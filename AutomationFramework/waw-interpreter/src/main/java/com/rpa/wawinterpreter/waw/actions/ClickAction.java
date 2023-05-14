@@ -1,21 +1,25 @@
 package com.rpa.wawinterpreter.waw.actions;
 
+import com.rpa.wawinterpreter.waw.internal.helper.ParserHelper;
 import com.rpa.wawinterpreter.waw.selectors.Selector;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class ClickAction implements Action {
-    public ClickAction(JSONArray parameters) {
+import java.util.List;
 
+public class ClickAction extends Action {
+    public ClickAction(JSONObject parameters) {
+        try {
+            this.selectors = ParserHelper.parseSelectors(parameters);
+        } catch (Exception e) {
+            throw new RuntimeException("Click action requires a valid selector");
+        }
     }
 
     @Override
     public void execute() {
-
-    }
-
-    @Override
-    public Selector getSelector() {
-        return null;
+        for (Selector selector : selectors) {
+            selector.getUiElement().click();
+        }
     }
 }
