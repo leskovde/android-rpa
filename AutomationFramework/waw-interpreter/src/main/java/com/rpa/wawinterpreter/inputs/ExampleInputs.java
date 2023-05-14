@@ -62,8 +62,6 @@ what:
 
  */
 
-// TODO: Implement the device-dependent actions
-
 public class ExampleInputs {
     public static final String SIMPLE_WAW = """
             {
