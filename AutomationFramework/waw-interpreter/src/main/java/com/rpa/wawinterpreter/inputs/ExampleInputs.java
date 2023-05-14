@@ -4,6 +4,16 @@ package com.rpa.wawinterpreter.inputs;
 where:
     - id ($after, $before)
     - selectors
+        - type (required)
+            - button
+            - calendarview
+            - checkbox
+            - imageview
+            - progressbar
+            - searchview
+            - textedit
+            - textview
+            - webview
         - index
         - resId
         - className
@@ -42,7 +52,10 @@ public class ExampleInputs {
             			"where": {
             			    "$after": "signup",
             			    "selectors": [
-            			        { "index" : "0" },
+            			         {
+            			            "type" : "textedit",
+            			            "index" : "0"
+                                 },
             			    ]
             			},
             			"what": [

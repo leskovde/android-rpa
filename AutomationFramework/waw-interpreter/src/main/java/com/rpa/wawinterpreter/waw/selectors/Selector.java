@@ -4,6 +4,8 @@ import com.rpa.automationframework.controls.UiElement;
 
 import org.json.JSONObject;
 
-public interface Selector {
-    UiElement getUiElement();
+public abstract class Selector {
+    protected TypeNames type;
+
+    public abstract UiElement getUiElement();
 }

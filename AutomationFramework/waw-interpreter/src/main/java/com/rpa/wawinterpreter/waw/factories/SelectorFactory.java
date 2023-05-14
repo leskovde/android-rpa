@@ -7,13 +7,14 @@ import com.rpa.wawinterpreter.waw.selectors.ResIdSelector;
 import com.rpa.wawinterpreter.waw.selectors.SelectorNames;
 import com.rpa.wawinterpreter.waw.selectors.Selector;
 import com.rpa.wawinterpreter.waw.selectors.TextSelector;
+import com.rpa.wawinterpreter.waw.selectors.TypeNames;
 
 import org.json.JSONObject;
 
 import java.util.Iterator;
 
 public class SelectorFactory {
-    public static Selector create(JSONObject selector) {
+    public static Selector create(JSONObject selector, TypeNames type) {
         SelectorNames selectorName = getSelectorName(selector);
         String parameter;
         try {
@@ -23,11 +24,11 @@ public class SelectorFactory {
         }
 
         return switch (selectorName) {
-            case INDEX -> new IndexSelector(parameter);
-            case RES_ID -> new ResIdSelector(parameter);
-            case CLASS_NAME -> new ClassNameSelector(parameter);
-            case DESC -> new DescriptionSelector(parameter);
-            case TEXT -> new TextSelector(parameter);
+            case INDEX -> new IndexSelector(parameter, type);
+            case RES_ID -> new ResIdSelector(parameter, type);
+            case CLASS_NAME -> new ClassNameSelector(parameter, type);
+            case DESC -> new DescriptionSelector(parameter, type);
+            case TEXT -> new TextSelector(parameter, type);
         };
     }
 
