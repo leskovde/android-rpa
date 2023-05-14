@@ -4,7 +4,7 @@ import com.rpa.automationframework.Device;
 
 import org.json.JSONObject;
 
-public class IdleAction extends Action {
+public class IdleAction implements Action {
     private final int idleTime;
 
     public IdleAction(JSONObject parameters) {

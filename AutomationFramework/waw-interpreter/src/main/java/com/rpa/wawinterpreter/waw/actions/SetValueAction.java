@@ -9,7 +9,7 @@ import com.rpa.wawinterpreter.waw.selectors.Selector;
 
 import org.json.JSONObject;
 
-public class SetValueAction extends Action {
+public class SetValueAction extends SelectorBasedAction {
     private Variable variable;
     private Boolean value;
 

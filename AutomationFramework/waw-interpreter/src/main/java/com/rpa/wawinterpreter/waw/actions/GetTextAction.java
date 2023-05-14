@@ -8,7 +8,7 @@ import com.rpa.wawinterpreter.waw.selectors.Selector;
 
 import org.json.JSONObject;
 
-public class GetTextAction extends Action {
+public class GetTextAction extends SelectorBasedAction {
     private final Variable variable;
 
     public GetTextAction(JSONObject parameters) {

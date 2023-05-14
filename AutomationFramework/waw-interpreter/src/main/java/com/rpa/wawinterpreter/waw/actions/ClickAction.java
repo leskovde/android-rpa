@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class ClickAction extends Action {
+public class ClickAction extends SelectorBasedAction {
     public ClickAction(JSONObject parameters) {
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);

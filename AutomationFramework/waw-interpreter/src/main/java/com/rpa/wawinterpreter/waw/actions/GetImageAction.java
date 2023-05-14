@@ -10,7 +10,7 @@ import com.rpa.wawinterpreter.waw.selectors.Selector;
 
 import org.json.JSONObject;
 
-public class GetImageAction extends Action {
+public class GetImageAction extends SelectorBasedAction {
     private final String path;
 
     public GetImageAction(JSONObject parameters) {

@@ -5,7 +5,7 @@ import com.rpa.wawinterpreter.waw.selectors.Selector;
 
 import org.json.JSONObject;
 
-public class LongClickAction extends Action {
+public class LongClickAction extends SelectorBasedAction {
     public LongClickAction(JSONObject parameters) {
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);

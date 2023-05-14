@@ -1,16 +1,14 @@
 package com.rpa.wawinterpreter.waw.actions;
 
-import com.rpa.automationframework.controls.TextBasedUiElement;
 import com.rpa.automationframework.controls.TextEdit;
 import com.rpa.automationframework.controls.UiElement;
 import com.rpa.wawinterpreter.waw.Variable;
 import com.rpa.wawinterpreter.waw.internal.helper.ParserHelper;
 import com.rpa.wawinterpreter.waw.selectors.Selector;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class SetTextAction extends Action {
+public class SetTextAction extends SelectorBasedAction {
     private Variable variable;
     private String text;
 

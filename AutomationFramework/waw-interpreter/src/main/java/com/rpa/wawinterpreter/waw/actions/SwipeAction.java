@@ -6,7 +6,7 @@ import com.rpa.wawinterpreter.waw.selectors.PositionSelector;
 
 import org.json.JSONObject;
 
-public class SwipeAction extends Action {
+public class SwipeAction implements Action {
     private final PositionSelector from;
     private final PositionSelector to;
 

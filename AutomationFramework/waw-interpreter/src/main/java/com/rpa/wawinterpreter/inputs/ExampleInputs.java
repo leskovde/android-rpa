@@ -46,12 +46,23 @@ what:
         - setValue
             - selector
             - value (boolean)
+        - home
+        - back
+        - recentApps
+        - volumeUp
+        - volumeDown
+        - lockScreen
+        - unlockScreen
+        - openNotification
+        - openAppDrawer
     - params:
         - text
         - value
         - selector
 
  */
+
+// TODO: Implement the device-dependent actions
 
 public class ExampleInputs {
     public static final String SIMPLE_WAW = """
