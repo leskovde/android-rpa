@@ -13,6 +13,12 @@ import com.rpa.automationframework.controls.WebView;
 import com.rpa.wawinterpreter.waw.selectors.TypeNames;
 
 public class UiElementFactory {
+
+    /**
+     * Constructs a new UI element of the given type.
+     * @param type The type of the UI element.
+     * @return The UI element.
+     */
     public static UiElement getUiElement(TypeNames type) {
         return switch (type) {
             case BUTTON -> new Button();

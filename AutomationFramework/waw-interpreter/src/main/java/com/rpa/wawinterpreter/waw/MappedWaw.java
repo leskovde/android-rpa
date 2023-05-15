@@ -3,6 +3,13 @@ package com.rpa.wawinterpreter.waw;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Parses and stores the WAW file.
+ * <p>
+ * The storage consists of the metadata and the workflow. The workflow can be executed.
+ * <p>
+ * If the parsing fails, a runtime exception with an appropriate error is thrown.
+ */
 public class MappedWaw {
     private final Metadata metadata;
     private final Workflow workflow;
@@ -75,19 +82,30 @@ public class MappedWaw {
         }
     }
 
+    /**
+     * Returns the name of the workflow as defined in the metadata.
+     * @return The name of the workflow.
+     */
     public String getName() {
         return metadata.getName();
     }
 
+    /**
+     * Returns the description of the workflow as defined in the metadata.
+     * @return The description of the workflow.
+     */
     public String getDescription() {
         return metadata.getDescription();
     }
 
+    /**
+     * Executes the workflow from the initial state.
+     */
     public void run() {
         String state = workflow.getInitialState();
 
-        while ((state = workflow.getNextState()) != null) {
+        do {
             workflow.run(state);
-        }
+        } while ((state = workflow.getNextState()) != null);
     }
 }

@@ -16,12 +16,17 @@ import org.junit.runner.RunWith;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The launcher for the WAW interpreter.
+ * <p>
+ * This class structured as a test is used create a parametrized automation run.
+ */
 @RunWith(AndroidJUnit4.class)
 public class AutomationRunner {
 
     @Before
     public void before() {
-        Log.println(Log.INFO,"AutomationRunner", "Launching WAW interpreter");
+        Log.println(Log.INFO,"AutomationRunner", "Launching the WAW interpreter");
     }
 
     @Test

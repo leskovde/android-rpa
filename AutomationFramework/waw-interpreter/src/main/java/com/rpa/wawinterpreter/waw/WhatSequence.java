@@ -8,10 +8,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a sequence of actions.
+ */
 public class WhatSequence {
-    private List<Action> actions;
+    private final List<Action> actions = new ArrayList<>();
 
     public WhatSequence(JSONArray what) {
         for (int i = 0; i < what.length(); i++) {
@@ -44,6 +48,9 @@ public class WhatSequence {
         }
     }
 
+    /**
+     * Runs the sequence of actions in the order they were defined.
+     */
     public void execute() {
         for (Action action : actions) {
             action.execute();

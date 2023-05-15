@@ -15,6 +15,15 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 public class SelectorFactory {
+
+    /**
+     * Creates a selector from the provided JSON object.
+     * <p>
+     * The selector must have a type name and a parameter.
+     *
+     * @param selector The JSON object to create the selector from.
+     * @return The created selector.
+     */
     public static Selector create(JSONObject selector) {
         SelectorNames selectorName = getSelectorName(selector);
         String parameter;

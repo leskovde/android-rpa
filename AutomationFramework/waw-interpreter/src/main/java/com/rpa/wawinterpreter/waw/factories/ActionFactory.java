@@ -12,10 +12,17 @@ import com.rpa.wawinterpreter.waw.actions.SetTextAction;
 import com.rpa.wawinterpreter.waw.actions.SetValueAction;
 import com.rpa.wawinterpreter.waw.actions.SwipeAction;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ActionFactory {
+
+    /**
+     * Returns an action based on the action name and parameters.
+     *
+     * @param action     The name of the action to create.
+     * @param parameters The parameters to pass to the action.
+     * @return The created action.
+     */
     public static Action getAction(ActionNames action, JSONObject parameters) {
         return switch (action) {
             case CLICK -> new ClickAction(parameters);

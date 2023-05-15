@@ -1,9 +1,12 @@
 package com.rpa.wawinterpreter.waw.actions;
 
-import com.rpa.wawinterpreter.waw.selectors.Selector;
-
-import java.util.List;
-
+/**
+ * Represents an action that can be executed on the device or on an UI element.
+ */
 public interface Action {
-    public abstract void execute();
+
+    /**
+     * Executes the action, possibly changing the state of the device.
+     */
+    void execute();
 }

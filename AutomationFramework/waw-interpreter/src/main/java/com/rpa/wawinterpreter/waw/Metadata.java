@@ -1,5 +1,10 @@
 package com.rpa.wawinterpreter.waw;
 
+/**
+ * Stores the metadata of the WAW file.
+ * <p>
+ * The metadata contains the name and description of the workflow.
+ */
 public class Metadata {
     private final String name;
     private final String description;
