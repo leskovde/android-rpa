@@ -10,18 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO: Check that the returned control exists before returning it.
+
+/**
+ * Finds UiObject controls using the UiSelector class.
+ */
 public class UiSelectorControlFinder extends UiAutomatorControlFinder {
 
     public UiSelectorControlFinder(UiDevice uiDevice) {
         super(uiDevice);
     }
 
+    /**
+     * Finds a control by its resource id.
+     *
+     * @param resourceId The resource id of the control.
+     * @return The control with matching resource id.
+     */
     @Override
     public RawUiElementUnion findByResourceId(String resourceId) {
         UiObject control = uiDevice.findObject(new UiSelector().resourceId(resourceId));
         return new RawUiElementUnion(control);
     }
 
+    /**
+     * Finds controls by their description.
+     *
+     * @param description The description of the controls.
+     * @return The controls with matching description.
+     */
     @Override
     public List<RawUiElementUnion> findByDescription(String description) {
         List<RawUiElementUnion> controls = new ArrayList<>();
@@ -31,6 +47,12 @@ public class UiSelectorControlFinder extends UiAutomatorControlFinder {
         return controls;
     }
 
+    /**
+     * Finds controls by their text content.
+     *
+     * @param content The text content of the controls.
+     * @return The controls with matching text content.
+     */
     @Override
     public List<RawUiElementUnion> findByTextContent(String content) {
         List<RawUiElementUnion> controls = new ArrayList<>();

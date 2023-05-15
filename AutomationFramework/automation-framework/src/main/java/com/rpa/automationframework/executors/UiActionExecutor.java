@@ -5,6 +5,12 @@ import android.graphics.Bitmap;
 import com.rpa.automationframework.controls.TextBasedUiElement;
 import com.rpa.automationframework.controls.UiElement;
 
+/**
+ * Executes actions on given UI elements.
+ * <p>
+ * The way of performing actions on UI elements is different for
+ * different types of UI elements.
+ */
 public interface UiActionExecutor {
     String getInternalType(UiElement element);
 

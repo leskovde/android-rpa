@@ -2,9 +2,6 @@ package com.rpa.automationframework.controls;
 
 import android.util.Log;
 
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObject2;
-
 import com.rpa.automationframework.Device;
 import com.rpa.automationframework.executors.UiActionExecutor;
 import com.rpa.automationframework.finders.ControlFinder;
@@ -13,7 +10,24 @@ import com.rpa.automationframework.internal.types.RawUiElementUnion;
 
 import java.util.List;
 
+/**
+ * Represents the root of text-based UI control hierarchy.
+ * <p>
+ * These are the controls that have text content and allow
+ * us to extract the content.
+ */
 public abstract class TextBasedUiElement extends UiElement {
+
+    /**
+     * Tries to find the element by its text content.
+     * <p>
+     * There could be many elements with the same text content, so we need to
+     * find the best candidate. The best candidate is the one that has the
+     * most specific type (e.g. Button when searching for a button). If there
+     * is no such element, we fall back to the default type.
+     *
+     * @return True if the element was found, false otherwise.
+     */
     public boolean tryFindByContent(String content) {
         RawUiElementUnion lastValidElement = null;
 
@@ -51,6 +65,11 @@ public abstract class TextBasedUiElement extends UiElement {
         return state != RawUiElementState.NONE;
     }
 
+    /**
+     * Gets the text of the UI element.
+     *
+     * @return The text of the UI element.
+     */
     public String getText() {
         UiActionExecutor executor = executors.get(state);
 

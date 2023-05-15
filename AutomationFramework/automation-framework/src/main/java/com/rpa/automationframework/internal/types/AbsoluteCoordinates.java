@@ -2,6 +2,9 @@ package com.rpa.automationframework.internal.types;
 
 import com.rpa.automationframework.Device;
 
+/**
+ * Represents a position on the screen in pixels.
+ */
 public class AbsoluteCoordinates implements Position {
     private final int x;
     private final int y;

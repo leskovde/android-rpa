@@ -2,6 +2,10 @@ package com.rpa.automationframework.internal.types;
 
 import com.rpa.automationframework.Device;
 
+/**
+ * Represents a position on the screen in relative coordinates,
+ * where 0 is the left/top and 1 is the right/bottom.
+ */
 public class RelativePosition implements Position {
     private final double x;
     private final double y;

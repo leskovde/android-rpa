@@ -4,9 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.util.Log;
 
-import androidx.test.services.events.TimeStamp;
 import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObject2;
 
 import com.rpa.automationframework.Device;
 import com.rpa.automationframework.controls.TextBasedUiElement;
@@ -14,8 +12,18 @@ import com.rpa.automationframework.controls.UiElement;
 import com.rpa.automationframework.internal.helper.ImageUtils;
 
 // TODO: I should check whether the incoming UiObject exists.
+
+/**
+ * Executes actions on extracted UiObject instances.
+ */
 public class UiObjectActionExecutor implements UiActionExecutor {
 
+    /**
+     * Gets the class name of the Android UI element, e.g. "android.widget.TextView".
+     *
+     * @param element The UI element which stores the native UI object.
+     * @return The class name of the Android UI element or null if the UI element could not be retrieved.
+     */
     @Override
     public String getInternalType(UiElement element) {
         try {
@@ -27,6 +35,14 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         return null;
     }
 
+    /**
+     * Gets the text content of the UI element.
+     * <p>
+     * This method is only applicable to UI elements which have text content.
+     *
+     * @param element The UI element which stores the text-based UI object.
+     * @return The text content of the UI element or an empty string if the UI element could not be retrieved.
+     */
     @Override
     public String getText(TextBasedUiElement element) {
         UiObject control = element.getUiObject();
@@ -41,6 +57,12 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         return text;
     }
 
+    /**
+     * Checks whether a checkbox, toggle, or switch are checked.
+     *
+     * @param element The UI element which stores the boolean-based UI object.
+     * @return The state of the checkbox, toggle, or switch. False if the UI element could not be retrieved.
+     */
     @Override
     public boolean isChecked(TextBasedUiElement element) {
         UiObject control = element.getUiObject();
@@ -54,6 +76,12 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         return false;
     }
 
+    /**
+     * Sets the state of a checkbox, toggle, or switch.
+     *
+     * @param element The UI element which stores the boolean-based UI object.
+     * @param checked The state to set the checkbox, toggle, or switch.
+     */
     @Override
     public void setCheckedValue(TextBasedUiElement element, boolean checked) {
         UiObject control = element.getUiObject();
@@ -68,6 +96,11 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         }
     }
 
+    /**
+     * Clicks on the UI element.
+     *
+     * @param element The UI element which stores the UI object.
+     */
     @Override
     public void click(UiElement element) {
         UiObject control = element.getUiObject();
@@ -79,6 +112,11 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         }
     }
 
+    /**
+     * Long clicks on the UI element.
+     *
+     * @param element The UI element which stores the UI object.
+     */
     @Override
     public void longClick(UiElement element) {
         UiObject control = element.getUiObject();
@@ -90,6 +128,14 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         }
     }
 
+    /**
+     * Sets the text content of the UI element.
+     * <p>
+     * This method is only applicable to UI elements which have editable text content.
+     *
+     * @param element The UI element which stores the text-based UI object.
+     * @param text    The text content to be set.
+     */
     @Override
     public void setText(TextBasedUiElement element, String text) {
         UiObject control = element.getUiObject();
@@ -101,6 +147,15 @@ public class UiObjectActionExecutor implements UiActionExecutor {
         }
     }
 
+    /**
+     * Gets the image of the UI element.
+     * <p>
+     * This is done by taking a screenshot of the device and cropping the image
+     * to the bounds of the UI element.
+     *
+     * @param element The UI element which stores the visible UI object.
+     * @return The image of the UI element.
+     */
     @Override
     public Bitmap getImage(UiElement element) {
         UiObject control = element.getUiObject();

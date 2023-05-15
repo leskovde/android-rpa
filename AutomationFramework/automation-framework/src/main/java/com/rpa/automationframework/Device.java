@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A singleton class that provides access to the device under test.
+ */
 public final class Device {
     private final UiDevice uiDevice;
     private int width;
@@ -45,6 +48,15 @@ public final class Device {
         return InstanceHolder.instance;
     }
 
+    /**
+     * Attempts to press the back button a given number of times.
+     * <p>
+     * If the attempt is successful, the method returns immediately. If the attempt fails, the method will sleep for 1
+     * second and then try again. This will be repeated until the attempt is successful or the given number of tries
+     * has been reached.
+     *
+     * @param numberOfTries The number of times to try pressing the back button.
+     */
     public void pressBack(int numberOfTries) {
         if (numberOfTries < 1) {
             throw new IllegalArgumentException("numberOfTries must be greater than 0");
@@ -70,11 +82,23 @@ public final class Device {
         Log.println(Log.WARN, "Device", "Failed to press the back button - there might not be a dialog to go back to.");
     }
 
+    /**
+     * Attempts to press the back button once and waits for the device to become idle.
+     */
     public void pressBack() {
         pressBack(1);
         uiDevice.waitForIdle();
     }
 
+    /**
+     * Attempts to press the home button a given number of times.
+     * <p>
+     * If the attempt is successful, the method returns immediately. If the attempt fails, the method will sleep for 1
+     * second and then try again. This will be repeated until the attempt is successful or the given number of tries
+     * has been reached.
+     *
+     * @param numberOfTries The number of times to try pressing the home button.
+     */
     public void pressHome(int numberOfTries) {
         if (numberOfTries < 1) {
             throw new IllegalArgumentException("numberOfTries must be greater than 0");
@@ -100,11 +124,23 @@ public final class Device {
         Log.println(Log.WARN, "Device", "Failed to press the home button - the device might already be on the home screen.");
     }
 
+    /**
+     * Attempts to press the home button once and waits for the device to become idle.
+     */
     public void pressHome() {
-        uiDevice.pressHome();
+        pressHome(1);
         uiDevice.waitForIdle();
     }
 
+    /**
+     * Attempts to press the recent apps button a given number of times.
+     * <p>
+     * If the attempt is successful, the method returns immediately. If the attempt fails, the method will sleep for 1
+     * second and then try again. This will be repeated until the attempt is successful or the given number of tries
+     * has been reached.
+     *
+     * @param numberOfTries The number of times to try pressing the recent apps button.
+     */
     public void pressRecentApps(int numberOfTries) {
         if (numberOfTries < 1) {
             throw new IllegalArgumentException("numberOfTries must be greater than 0");
@@ -135,24 +171,41 @@ public final class Device {
         Log.println(Log.WARN, "Device", "Failed to press the recent apps button.");
     }
 
+    /**
+     * Attempts to press the recent apps button once and waits for the device to become idle.
+     */
     public void pressRecentApps() {
         pressRecentApps(1);
         uiDevice.waitForIdle();
     }
 
+    /**
+     * Presses the volume up button.
+     */
     public void pressVolumeUp() {
         uiDevice.pressKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
     }
 
+    /**
+     * Presses the volume down button.
+     */
     public void pressVolumeDown() {
         uiDevice.pressKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
     }
 
+    /**
+     * Presses the power/lock button.
+     */
     public void pressPower() {
         uiDevice.pressKeyCode(KeyEvent.KEYCODE_POWER);
         uiDevice.waitForIdle();
     }
 
+    /**
+     * Attempts to lock the screen.
+     * <p>
+     * If the screen is already locked, the method returns immediately.
+     */
     public void lockScreen() {
         try {
             uiDevice.sleep();
@@ -163,6 +216,11 @@ public final class Device {
         uiDevice.waitForIdle();
     }
 
+    /**
+     * Attempts to unlock the screen.
+     * <p>
+     * If the screen is already unlocked, the method returns immediately.
+     */
     public void unlockScreen() {
         try {
             uiDevice.wakeUp();
@@ -173,28 +231,50 @@ public final class Device {
         // An idle wait is automatically inserted by wakeUp().
     }
 
-    // TODO: Does rotation play a role in this?
+    /**
+     * Returns the width of the display, in pixels.
+     *
+     * @return The width of the display, in pixels.
+     */
     public int getDisplayWidth() {
         if (width == 0) {
+            // TODO: Does rotation play a role in this?
             width = uiDevice.getDisplayWidth();
         }
 
         return width;
     }
 
-    // TODO: Does rotation play a role in this?
+    /**
+     * Returns the height of the display, in pixels.
+     *
+     * @return The height of the display, in pixels.
+     */
     public int getDisplayHeight() {
         if (height == 0) {
+            // TODO: Does rotation play a role in this?
             height = uiDevice.getDisplayHeight();
         }
 
         return height;
     }
 
+    /**
+     * Clicks on the specified position.
+     *
+     * @param position The absolute or relative position to click on.
+     */
     public void click(Position position) {
         uiDevice.click(position.getX(), position.getY());
     }
 
+    /**
+     * Performs a long click on the specified position.
+     * <p>
+     * This method will swipe from the specified position to the same position over a duration of 0.5 seconds.
+     *
+     * @param position The absolute or relative position to click on.
+     */
     public void longClick(Position position) {
         int x = position.getX();
         int y = position.getY();
@@ -203,12 +283,25 @@ public final class Device {
         uiDevice.swipe(x, y, x, y, 100);
     }
 
+    /**
+     * Swipes from one position to another.
+     * <p>
+     * The duration of the swipe is calculated based on the distance between the two positions.
+     *
+     * @param from The absolute or relative position to start the swipe from.
+     * @param to   The absolute or relative position to end the swipe at.
+     */
     public void swipe(Position from, Position to) {
         int steps = (int) (Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2)) / 100 + 1);
         uiDevice.swipe(from.getX(), from.getY(), to.getX(), to.getY(), steps);
         uiDevice.waitForIdle();
     }
 
+    /**
+     * Waits a specified amount of time.
+     *
+     * @param ms The number of milliseconds to wait.
+     */
     public void idle(long ms) {
         try {
             Thread.sleep(ms);
@@ -217,6 +310,14 @@ public final class Device {
         }
     }
 
+    /**
+     * Takes a screenshot and saves it to the specified file.
+     * <p>
+     * The file is then loaded into memory and returned as a Bitmap.
+     *
+     * @param filename The filename to save the screenshot to.
+     * @return The screenshot as a Bitmap.
+     */
     public Bitmap takeScreenshot(String filename) {
         if (!uiDevice.takeScreenshot(new File(filename))) {
             Log.println(Log.ERROR, "Device", "Failed to take screenshot");
@@ -228,11 +329,17 @@ public final class Device {
         return BitmapFactory.decodeFile(filename, options);
     }
 
+    /**
+     * Opens the Android app drawer by swiping up from the bottom of the screen.
+     */
     public void openAppDrawer() {
         pressHome();
         swipe(new RelativePosition(0.5, 1.0), new RelativePosition(0.5, 0.5));
     }
 
+    /**
+     * Opens the Android notifications.
+     */
     public void openNotifications() {
         try {
             if (!uiDevice.openNotification()) {

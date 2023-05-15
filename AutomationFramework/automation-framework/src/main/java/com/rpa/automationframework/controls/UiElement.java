@@ -18,6 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents the root of UI control hierarchy.
+ * <p>
+ * Allows to perform basic actions on the UI element, such as clicking.
+ */
 public abstract class UiElement {
     protected static Map<RawUiElementState, UiActionExecutor> executors;
 
@@ -142,6 +147,13 @@ public abstract class UiElement {
         return state != RawUiElementState.NONE;
     }
 
+    /**
+     * Tries to find the element by its resource id.
+     * <p>
+     * There should be only one element with a resource id, so if we find one, we can stop.
+     *
+     * @return True if the element was found, false otherwise.
+     */
     public boolean tryFindByResourceId(String resourceId) {
         RawUiElementUnion lastValidElement = null;
 
@@ -176,7 +188,11 @@ public abstract class UiElement {
         return state != RawUiElementState.NONE;
     }
 
-    // TODO: Implement a way of checking via `contains`.
+    /**
+     * Tries to find the element by its description.
+     *
+     * @return True if the element was found, false otherwise.
+     */
     public boolean tryFindByDescription(String description) {
         RawUiElementUnion lastValidElement = null;
 
@@ -214,6 +230,11 @@ public abstract class UiElement {
         return state != RawUiElementState.NONE;
     }
 
+    /**
+     * Tries to find the element by its position on the screen.
+     *
+     * @return True if the element was found, false otherwise.
+     */
     public boolean tryFindByPosition(Position position) {
         RawUiElementUnion lastValidElement = null;
 
@@ -248,6 +269,9 @@ public abstract class UiElement {
         return state != RawUiElementState.NONE;
     }
 
+    /**
+     * Perform a short click on the element based on its visible bounds.
+     */
     public void click() {
         UiActionExecutor executor = executors.get(state);
 
@@ -258,6 +282,11 @@ public abstract class UiElement {
         executor.click(this);
     }
 
+    /**
+     * Perform a long click on the element based on its visible bounds.
+     * <p>
+     * This action is in some cases simulated by performing an in-place swipe.
+     */
     public void longClick() {
         UiActionExecutor executor = executors.get(state);
 

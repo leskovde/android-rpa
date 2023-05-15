@@ -3,11 +3,14 @@ package com.rpa.automationframework.internal.types;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObject2;
 
+/**
+ * Represents a union of UiObject and UiObject2 (or possibly other types in the future).
+ */
 public class RawUiElementUnion {
     private UiObject uiObject;
     private UiObject2 uiObject2;
 
-    private RawUiElementState state = RawUiElementState.NONE;
+    private RawUiElementState state;
 
     public RawUiElementUnion(UiObject uiObject) {
 
@@ -21,6 +24,11 @@ public class RawUiElementUnion {
         this.state = RawUiElementState.UIOBJECT2;
     }
 
+    /**
+     * Gets the underlying UiObject.
+     *
+     * @return UiObject or UiObject2, based on what was provided in the constructor. Otherwise null.
+     */
     public Object getPayload() {
         if (state == RawUiElementState.UIOBJECT) {
             return uiObject;
@@ -31,6 +39,11 @@ public class RawUiElementUnion {
         }
     }
 
+    /**
+     * Gets the state of the underlying UI object representation.
+     *
+     * @return The name of the underlying UI object representation.
+     */
     public RawUiElementState getState() {
         return state;
     }
