@@ -1,5 +1,7 @@
 package com.rpa.wawinterpreter.waw;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,17 +27,7 @@ public class MappedWaw {
             throw new RuntimeException("The provided WAW input is not valid JSON", e);
         }
 
-        try {
-            metaData = waw.getJSONObject("meta");
-        } catch (Exception e) {
-            throw new RuntimeException("The provided WAW input does not contain a 'meta' object", e);
-        }
-
-        try {
-            metadata = new Metadata(metaData.getString("name"), metaData.getString("description"));
-        } catch (Exception e) {
-            throw new RuntimeException("The provided WAW input does not contain a 'name' or 'description'", e);
-        }
+        metadata = parseMetadata(waw);
 
         try {
             workflowArray = waw.getJSONArray("workflow");
@@ -84,6 +76,7 @@ public class MappedWaw {
 
     /**
      * Returns the name of the workflow as defined in the metadata.
+     *
      * @return The name of the workflow.
      */
     public String getName() {
@@ -92,6 +85,7 @@ public class MappedWaw {
 
     /**
      * Returns the description of the workflow as defined in the metadata.
+     *
      * @return The description of the workflow.
      */
     public String getDescription() {
@@ -107,5 +101,24 @@ public class MappedWaw {
         do {
             workflow.run(state);
         } while ((state = workflow.getNextState()) != null);
+    }
+
+    @NonNull
+    private Metadata parseMetadata(JSONObject waw) {
+        Metadata parsedMetadata;
+        JSONObject metadata;
+        try {
+            metadata = waw.getJSONObject("meta");
+        } catch (Exception e) {
+            throw new RuntimeException("The provided WAW input does not contain a 'meta' object", e);
+        }
+
+        try {
+            parsedMetadata = new Metadata(metadata.getString("name"), metadata.getString("desc"));
+        } catch (Exception e) {
+            throw new RuntimeException("The provided WAW input does not contain a 'name' or 'desc'", e);
+        }
+
+        return parsedMetadata;
     }
 }

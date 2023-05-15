@@ -32,7 +32,7 @@ public class RawUiElementUnion {
     public Object getPayload() {
         if (state == RawUiElementState.UIOBJECT) {
             return uiObject;
-        } else if (state == RawUiElementState.UIOBJECT2) {
+        } else if (state.equals(RawUiElementState.UIOBJECT2)) {
             return uiObject2;
         } else {
             return null;

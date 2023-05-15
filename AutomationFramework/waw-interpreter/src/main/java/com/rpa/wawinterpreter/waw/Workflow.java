@@ -4,6 +4,7 @@ import com.rpa.automationframework.Device;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
  * Should a state have multiple action sequences, only the first one will be executed.
  */
 public class Workflow {
-    private final Map<String, WherePosition> wherePositions = new HashMap<>();
+    private final Map<String, WherePosition> wherePositions = new LinkedHashMap<>();
     private final Map<WherePosition, List<WhatSequence>> actionSequences = new HashMap<>();
 
     /**
@@ -75,7 +76,7 @@ public class Workflow {
             throw new RuntimeException("State '" + state + "' does not exist");
         }
 
-        run(currentPosition.getBefore());
+        run(getBefore(currentPosition));
 
         List<WhatSequence> sequences = actionSequences.get(currentPosition);
         if (sequences == null || sequences.isEmpty()) {
@@ -85,6 +86,28 @@ public class Workflow {
         // Only the first sequence is executed.
         sequences.get(0).execute();
 
-        run(currentPosition.getAfter());
+        run(getAfter(currentPosition));
+    }
+
+    private String getBefore(WherePosition position) {
+        for (Map.Entry<String, WherePosition> entry : wherePositions.entrySet()) {
+            String before = entry.getValue().getBefore();
+            if (before != null && before.equals(position.getId())) {
+                return entry.getKey();
+            }
+        }
+
+        return null;
+    }
+
+    private String getAfter(WherePosition position) {
+        for (Map.Entry<String, WherePosition> entry : wherePositions.entrySet()) {
+            String after = entry.getValue().getAfter();
+            if (after != null && after.equals(position.getId())) {
+                return entry.getKey();
+            }
+        }
+
+        return null;
     }
 }

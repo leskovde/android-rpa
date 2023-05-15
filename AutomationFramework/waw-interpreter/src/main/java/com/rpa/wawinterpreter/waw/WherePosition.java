@@ -31,7 +31,7 @@ public class WherePosition {
         }
 
         try {
-            this.after = wherePosition.getString("after");
+            this.after = wherePosition.getString("$after");
         } catch (Exception e) {
             this.after = null;
         }
@@ -74,6 +74,10 @@ public class WherePosition {
      * @return True if all selectors match, false otherwise.
      */
     public boolean matchesCurrentState() {
+        if (selectors.isEmpty()) {
+            return false;
+        }
+
         boolean matches = true;
 
         for (Selector selector : selectors) {

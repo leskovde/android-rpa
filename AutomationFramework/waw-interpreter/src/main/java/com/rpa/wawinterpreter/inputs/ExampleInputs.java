@@ -66,25 +66,29 @@ what:
 public class ExampleInputs {
     public static final String SIMPLE_WAW = """
             {
-                "meta" : {
+                "meta": {
                     "name": "App Drawer Opener",
                     "desc": "Opens the app drawer and idles."
-                }
+                },
                 "workflow": [
                     {
                         "id": "home",
                         "where": {
                             "selectors": [
-                                 {
-                                    "type" : "view",
-                                    "desc" : "Home"
-                                 },
+                                {
+                                    "type": "view",
+                                    "desc": "Home"
+                                },
+                                {
+                                    "type": "text_view",
+                                    "res_id": "com.google.android.apps.nexuslauncher:id/clock"
+                                }
                             ]
                         },
                         "what": [
-                                {
-                                    "action": "open_app_drawer"
-                                }
+                            {
+                                "action": "open_app_drawer"
+                            }
                         ]
                     },
                     {

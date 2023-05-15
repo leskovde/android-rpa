@@ -74,12 +74,12 @@ public abstract class UiElement {
             }
 
             InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
-            if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+            if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.MATCHING)) {
                 // We have found the best candidate, so we can stop.
                 return true;
             }
 
-            if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+            if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.FALLBACK)) {
                 // The element does not have the valid type, but we can still use it.
                 lastValidElement = control;
             }
@@ -122,12 +122,12 @@ public abstract class UiElement {
                     }
 
                     InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
-                    if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+                    if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.MATCHING)) {
                         // We have found the best candidate, so we can stop.
                         return true;
                     }
 
-                    if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+                    if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.FALLBACK)) {
                         // The element does not have the valid type, but we can still use it.
                         lastValidElement = control;
                     }
@@ -165,12 +165,12 @@ public abstract class UiElement {
             }
 
             InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
-            if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+            if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.MATCHING)) {
                 // We have found the best candidate, so we can stop.
                 return true;
             }
 
-            if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+            if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.FALLBACK)) {
                 // The element does not have the valid type, but we can still use it.
                 lastValidElement = control;
             }
@@ -206,12 +206,12 @@ public abstract class UiElement {
                 }
 
                 InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
-                if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+                if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.MATCHING)) {
                     // We have found the best candidate, so we can stop.
                     return true;
                 }
 
-                if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+                if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.FALLBACK)) {
                     // The element does not have the valid type, but we can still use it.
                     lastValidElement = control;
                 }
@@ -246,12 +246,12 @@ public abstract class UiElement {
             }
 
             InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
-            if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+            if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.MATCHING)) {
                 // We have found the best candidate, so we can stop.
                 return true;
             }
 
-            if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+            if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.FALLBACK)) {
                 // The element does not have the valid type, but we can still use it.
                 lastValidElement = control;
             }
@@ -307,7 +307,7 @@ public abstract class UiElement {
         String internalType = executor.getInternalType(this);
 
         if (internalType == null) {
-            throw new RuntimeException("No internal type found for state: " + state);
+            return false;
         }
 
         return isInternalTypeAssignable(internalType);
@@ -328,6 +328,10 @@ public abstract class UiElement {
 
             if (payload instanceof UiObject) {
                 uiObject = (UiObject) payload;
+                if (!uiObject.exists()) {
+                    return AssignmentResult.FAILED;
+                }
+
                 state = RawUiElementState.UIOBJECT;
 
                 if (isValidType()) {

@@ -41,12 +41,12 @@ public abstract class TextBasedUiElement extends UiElement {
                 }
 
                 InternalObjectAssigner.AssignmentResult assignmentResult = assigner.tryAssign(control);
-                if (assignmentResult == InternalObjectAssigner.AssignmentResult.MATCHING) {
+                if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.MATCHING)) {
                     // We have found the best candidate, so we can stop.
                     return true;
                 }
 
-                if (assignmentResult == InternalObjectAssigner.AssignmentResult.FALLBACK) {
+                if (assignmentResult.equals(InternalObjectAssigner.AssignmentResult.FALLBACK)) {
                     // The element does not have the valid type, but we can still use it.
                     lastValidElement = control;
                 }

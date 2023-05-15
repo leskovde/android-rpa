@@ -28,7 +28,7 @@ public class SelectorFactory {
         SelectorNames selectorName = getSelectorName(selector);
         String parameter;
         try {
-            parameter = selector.getString(selectorName.name());
+            parameter = selector.getString(selectorName.name().toLowerCase());
         } catch (Exception e) {
             throw new RuntimeException("Selector must have a parameter");
         }
