@@ -13,8 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * The launcher for the WAW interpreter.
@@ -26,28 +25,28 @@ public class AutomationRunner {
 
     @Before
     public void before() {
-        Log.println(Log.INFO,"AutomationRunner", "Launching the WAW interpreter");
+        Log.println(Log.INFO, "AutomationRunner", "Launching the WAW interpreter");
     }
 
     @Test
     public void runWawFile() {
-        String wawInput = ExampleInputs.SIMPLE_WAW;
+        String wawInput = ExampleInputs.EXTRACT_TEXT;
         MappedWaw waw = new MappedWaw(wawInput);
         waw.run();
     }
 
     @After
     public void after() {
-        Log.println(Log.INFO,"AutomationRunner", "WAW interpreter finished");
+        Log.println(Log.INFO, "AutomationRunner", "WAW interpreter finished");
 
-        Set< Map.Entry<String, Variable>> variables = Variable.getAll();
+        Collection<Variable> variables = Variable.getAll();
         if (variables.isEmpty()) {
             return;
         }
 
-        Log.println(Log.INFO,"AutomationRunner", "Variables:");
-        for (Map.Entry<String, Variable> variable : variables) {
-            Log.println(Log.INFO,"AutomationRunner", variable.getKey() + " = " + variable.getValue());
+        Log.println(Log.INFO, "AutomationRunner", "Variables:");
+        for (Variable variable : variables) {
+            Log.println(Log.INFO, "AutomationRunner", variable.getName() + " = " + variable.getValue());
         }
     }
 }

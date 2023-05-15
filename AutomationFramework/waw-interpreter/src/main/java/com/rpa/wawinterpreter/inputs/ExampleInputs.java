@@ -27,8 +27,8 @@ what:
         - long_click
             - selector
         - swipe
-            - fromPosition
-            - toPosition
+            - fromPosition (selector)
+            - toPosition (selector)
         - idle
             - duration (int)
         - get_text
@@ -39,10 +39,10 @@ what:
             - variable
         - get_image
             - selector
-            - path
+            - path (string)
         - set_text
             - selector
-            - text
+            - text (string)
             - variable
         - set_value
             - selector
@@ -54,7 +54,7 @@ what:
         - volume_down
         - lock_screen
         - unlock_screen
-        - open_notification
+        - open_notifications
         - open_app_drawer
     - params:
         - text
@@ -64,7 +64,7 @@ what:
  */
 
 public class ExampleInputs {
-    public static final String SIMPLE_WAW = """
+    public static final String OPEN_AND_IDLE = """
             {
                 "meta": {
                     "name": "App Drawer Opener",
@@ -103,6 +103,118 @@ public class ExampleInputs {
                                 "args": {
                                     "duration": 1000
                                 }
+                            }
+                        ]
+                    }
+                ]
+            }
+            """;
+
+    public static final String EXTRACT_TEXT = """
+            {
+                "meta": {
+                    "name": "Text Extractor",
+                    "desc": "Gets the current battery level."
+                },
+                "workflow": [
+                    {
+                        "id": "home",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "view",
+                                    "desc": "Home"
+                                },
+                                {
+                                    "type": "text_view",
+                                    "res_id": "com.google.android.apps.nexuslauncher:id/clock"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "open_app_drawer"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_settings",
+                        "where": {
+                            "$after": "home",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "desc": "Settings"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_battery",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "button",
+                                    "text": "Battery"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "text": "Battery"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "get_battery_level",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "view",
+                                    "desc": "Battery"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "get_text",
+                                "args": {
+                                    "variable": "battery",
+                                    "selectors": [
+                                        {
+                                            "type": "text_view",
+                                            "res_id": "com.android.settings:id/usage_summary"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "hide_battery",
+                        "where": {
+                            "$after": "get_battery_level",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "lock_screen"
                             }
                         ]
                     }

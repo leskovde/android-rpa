@@ -1,5 +1,6 @@
 package com.rpa.wawinterpreter.waw.actions;
 
+import com.rpa.automationframework.controls.UiElement;
 import com.rpa.wawinterpreter.waw.internal.helper.ParserHelper;
 import com.rpa.wawinterpreter.waw.selectors.Selector;
 
@@ -19,7 +20,9 @@ public class LongClickAction extends SelectorBasedAction {
     @Override
     public void execute() {
         for (Selector selector : this.selectors) {
-            selector.getUiElement().longClick();
+            UiElement element = selector.getUiElement();
+            if (element == null) continue;
+            element.longClick();
         }
     }
 }

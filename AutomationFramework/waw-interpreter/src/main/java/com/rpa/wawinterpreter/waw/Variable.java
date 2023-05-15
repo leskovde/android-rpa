@@ -1,8 +1,8 @@
 package com.rpa.wawinterpreter.waw;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * A singleton class that stores variable instances throughout the execution.
@@ -42,8 +42,8 @@ public class Variable {
      *
      * @return All the variables.
      */
-    public static Set<Map.Entry<String, Variable>> getAll() {
-        return variables.entrySet();
+    public static Collection<Variable> getAll() {
+        return variables.values();
     }
 
     public String getName() {
