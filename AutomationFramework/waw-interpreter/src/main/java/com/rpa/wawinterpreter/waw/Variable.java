@@ -2,6 +2,7 @@ package com.rpa.wawinterpreter.waw;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Variable {
     private static final Map<String, Variable> variables = new HashMap<>();
@@ -20,6 +21,10 @@ public class Variable {
         Variable variable = new Variable(name);
         variables.put(name, variable);
         return variable;
+    }
+
+    public static Set<Map.Entry<String, Variable>> getAll() {
+        return variables.entrySet();
     }
 
     public String getName() {
