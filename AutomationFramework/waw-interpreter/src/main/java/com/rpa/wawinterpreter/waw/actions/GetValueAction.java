@@ -12,6 +12,8 @@ public class GetValueAction extends SelectorBasedAction {
     private final Variable variable;
 
     public GetValueAction(JSONObject parameters) {
+        if (parameters == null) throw new RuntimeException("GetValue action requires parameters");
+
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);
         } catch (Exception e) {

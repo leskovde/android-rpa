@@ -1,7 +1,6 @@
 package com.rpa.wawinterpreter.waw.actions;
 
 import com.rpa.automationframework.controls.CheckBox;
-import com.rpa.automationframework.controls.TextEdit;
 import com.rpa.automationframework.controls.UiElement;
 import com.rpa.wawinterpreter.waw.Variable;
 import com.rpa.wawinterpreter.waw.internal.helper.ParserHelper;
@@ -14,6 +13,8 @@ public class SetValueAction extends SelectorBasedAction {
     private Boolean value;
 
     public SetValueAction(JSONObject parameters) {
+        if (parameters == null) throw new RuntimeException("SetValue action requires parameters");
+
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);
         } catch (Exception e) {

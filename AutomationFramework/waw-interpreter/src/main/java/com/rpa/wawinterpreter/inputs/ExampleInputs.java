@@ -6,55 +6,56 @@ where:
     - selectors
         - type (required)
             - button
-            - calendarview
-            - checkbox
-            - imageview
-            - progressbar
-            - searchview
-            - textedit
-            - textview
-            - webview
+            - calendar_view
+            - check_box
+            - image_view
+            - progress_bar
+            - search_view
+            - text_edit
+            - text_view
+            - web_view
+            - view
         - index
-        - resId
-        - className
+        - res_id
+        - class_name
         - desc
         - text
 what:
     - action:
         - click
             - selector
-        - longClick
+        - long_click
             - selector
         - swipe
             - fromPosition
             - toPosition
         - idle
             - duration (int)
-        - getText
+        - get_text
             - selector
             - variable
-        - getValue
+        - get_value
             - selector
             - variable
-        - getImage
+        - get_image
             - selector
             - path
-        - setText
+        - set_text
             - selector
             - text
             - variable
-        - setValue
+        - set_value
             - selector
             - value (boolean)
         - home
         - back
-        - recentApps
-        - volumeUp
-        - volumeDown
-        - lockScreen
-        - unlockScreen
-        - openNotification
-        - openAppDrawer
+        - recent_apps
+        - volume_up
+        - volume_down
+        - lock_screen
+        - unlock_screen
+        - open_notification
+        - open_app_drawer
     - params:
         - text
         - value
@@ -65,38 +66,43 @@ what:
 public class ExampleInputs {
     public static final String SIMPLE_WAW = """
             {
-            	"meta" : {
-                    "name": "Google Maps Scraper",
-                    "desc": "A blazing fast scraper for Google Maps search results."
+                "meta" : {
+                    "name": "App Drawer Opener",
+                    "desc": "Opens the app drawer and idles."
                 }
-            	"workflow": [
-            		{
-            			"id": "login",
-            			"where": {
-            			    "$after": "signup",
-            			    "selectors": [
-            			         {
-            			            "type" : "textedit",
-            			            "index" : "0"
+                "workflow": [
+                    {
+                        "id": "home",
+                        "where": {
+                            "selectors": [
+                                 {
+                                    "type" : "view",
+                                    "desc" : "Home"
                                  },
-            			    ]
-            			},
-            			"what": [
-            			        {
-                                    "action": "idle",
-                                    "args": {
-                                        "duration": 1000
-                                    }
+                            ]
+                        },
+                        "what": [
+                                {
+                                    "action": "open_app_drawer"
                                 }
-            			]
-            		},
-            		{
-            			"id": "signup",
-            			"where": {...},
-            			"what": [...]
-            		},
-            		...
-            	]
-            ]
+                        ]
+                    },
+                    {
+                        "id": "idle",
+                        "where": {
+                            "$after": "home",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "idle",
+                                "args": {
+                                    "duration": 1000
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
             """;
 }

@@ -14,6 +14,8 @@ public class GetImageAction extends SelectorBasedAction {
     private final String path;
 
     public GetImageAction(JSONObject parameters) {
+        if (parameters == null) throw new RuntimeException("GetImage action requires parameters");
+
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);
         } catch (Exception e) {

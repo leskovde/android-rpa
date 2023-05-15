@@ -30,9 +30,10 @@ public class AutomationRunner {
     }
 
     @Test
-    public void test() {
+    public void runWawFile() {
         String wawInput = ExampleInputs.SIMPLE_WAW;
         MappedWaw waw = new MappedWaw(wawInput);
+        waw.run();
     }
 
     @After

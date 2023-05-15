@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 public class LongClickAction extends SelectorBasedAction {
     public LongClickAction(JSONObject parameters) {
+        if (parameters == null) throw new RuntimeException("LongClick action requires parameters");
+
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);
         } catch (Exception e) {

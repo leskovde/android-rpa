@@ -5,10 +5,10 @@ import com.rpa.wawinterpreter.waw.selectors.Selector;
 
 import org.json.JSONObject;
 
-import java.util.List;
-
 public class ClickAction extends SelectorBasedAction {
     public ClickAction(JSONObject parameters) {
+        if (parameters == null) throw new RuntimeException("Click action requires parameters");
+
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);
         } catch (Exception e) {

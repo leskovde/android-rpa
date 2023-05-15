@@ -35,7 +35,7 @@ public class SelectorFactory {
 
         TypeNames type;
         try {
-            type = TypeNames.valueOf(selector.getString("type"));
+            type = TypeNames.valueOf(selector.getString("type").toUpperCase());
         } catch (Exception e) {
             throw new RuntimeException("Selector must have a valid type");
         }
@@ -56,7 +56,7 @@ public class SelectorFactory {
         while (keys.hasNext()) {
             String key = keys.next();
             try {
-                return SelectorNames.valueOf(key);
+                return SelectorNames.valueOf(key.toUpperCase());
             } catch (Exception e) {
                 // Ignore
             }

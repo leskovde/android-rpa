@@ -28,19 +28,18 @@ public class WhatSequence {
 
             ActionNames actionName;
             try {
-                // TODO: All calls to valueOf should have the arg converted to uppercase
-                actionName = ActionNames.valueOf(whatItem.getString("action"));
+                actionName = ActionNames.valueOf(whatItem.getString("action").toUpperCase());
             } catch (JSONException e) {
                 throw new RuntimeException("The provided WAW input contains a workflow item that does not contain an 'action' name", e);
             } catch (IllegalArgumentException e) {
                 throw new RuntimeException("The workflow item does not contain a valid action name", e);
             }
 
-            JSONObject parameters;
+            JSONObject parameters = null;
             try {
                 parameters = whatItem.getJSONObject("args");
             } catch (JSONException e) {
-                throw new RuntimeException("The provided WAW input contains a 'what' item that does not contain an 'args' array", e);
+                // Ignore
             }
 
             Action action = ActionFactory.getAction(actionName, parameters);

@@ -9,6 +9,7 @@ import com.rpa.automationframework.controls.SearchView;
 import com.rpa.automationframework.controls.TextEdit;
 import com.rpa.automationframework.controls.TextView;
 import com.rpa.automationframework.controls.UiElement;
+import com.rpa.automationframework.controls.View;
 import com.rpa.automationframework.controls.WebView;
 import com.rpa.wawinterpreter.waw.selectors.TypeNames;
 
@@ -30,6 +31,7 @@ public class UiElementFactory {
             case TEXT_EDIT -> new TextEdit();
             case TEXT_VIEW -> new TextView();
             case WEB_VIEW -> new WebView();
+            case VIEW -> new View();
         };
     }
 }

@@ -13,6 +13,8 @@ public class SetTextAction extends SelectorBasedAction {
     private String text;
 
     public SetTextAction(JSONObject parameters) {
+        if (parameters == null) throw new RuntimeException("SetText action requires parameters");
+
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);
         } catch (Exception e) {

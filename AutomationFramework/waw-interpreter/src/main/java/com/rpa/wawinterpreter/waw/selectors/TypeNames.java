@@ -9,5 +9,6 @@ public enum TypeNames {
     SEARCH_VIEW,
     TEXT_EDIT,
     TEXT_VIEW,
-    WEB_VIEW
+    WEB_VIEW,
+    VIEW
 }

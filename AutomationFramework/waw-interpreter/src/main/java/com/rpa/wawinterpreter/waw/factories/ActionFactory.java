@@ -6,11 +6,20 @@ import com.rpa.wawinterpreter.waw.actions.GetImageAction;
 import com.rpa.wawinterpreter.waw.actions.GetTextAction;
 import com.rpa.wawinterpreter.waw.actions.GetValueAction;
 import com.rpa.wawinterpreter.waw.actions.IdleAction;
+import com.rpa.wawinterpreter.waw.actions.LockScreenAction;
 import com.rpa.wawinterpreter.waw.actions.LongClickAction;
 import com.rpa.wawinterpreter.waw.actions.ActionNames;
+import com.rpa.wawinterpreter.waw.actions.OpenAppDrawerAction;
+import com.rpa.wawinterpreter.waw.actions.OpenNotificationsAction;
+import com.rpa.wawinterpreter.waw.actions.PressBackAction;
+import com.rpa.wawinterpreter.waw.actions.PressHomeAction;
+import com.rpa.wawinterpreter.waw.actions.PressRecentAppsAction;
 import com.rpa.wawinterpreter.waw.actions.SetTextAction;
 import com.rpa.wawinterpreter.waw.actions.SetValueAction;
 import com.rpa.wawinterpreter.waw.actions.SwipeAction;
+import com.rpa.wawinterpreter.waw.actions.UnlockScreenAction;
+import com.rpa.wawinterpreter.waw.actions.VolumeDownAction;
+import com.rpa.wawinterpreter.waw.actions.VolumeUpAction;
 
 import org.json.JSONObject;
 
@@ -34,6 +43,15 @@ public class ActionFactory {
             case GET_IMAGE -> new GetImageAction(parameters);
             case SET_TEXT -> new SetTextAction(parameters);
             case SET_VALUE -> new SetValueAction(parameters);
+            case HOME -> new PressHomeAction();
+            case BACK -> new PressBackAction();
+            case RECENT_APPS -> new PressRecentAppsAction();
+            case VOLUME_UP -> new VolumeUpAction();
+            case VOLUME_DOWN -> new VolumeDownAction();
+            case LOCK_SCREEN -> new LockScreenAction();
+            case UNLOCK_SCREEN -> new UnlockScreenAction();
+            case OPEN_NOTIFICATIONS -> new OpenNotificationsAction();
+            case OPEN_APP_DRAWER -> new OpenAppDrawerAction();
         };
     }
 }

@@ -12,6 +12,8 @@ public class GetTextAction extends SelectorBasedAction {
     private final Variable variable;
 
     public GetTextAction(JSONObject parameters) {
+        if (parameters == null) throw new RuntimeException("GetText action requires parameters");
+
         try {
             this.selectors = ParserHelper.parseSelectors(parameters);
         } catch (Exception e) {

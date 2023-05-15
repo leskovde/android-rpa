@@ -11,6 +11,8 @@ public class SwipeAction implements Action {
     private final PositionSelector to;
 
     public SwipeAction(JSONObject parameters) {
+        if (parameters == null) throw new RuntimeException("Swipe action requires parameters");
+
         try {
             this.from = (PositionSelector) SelectorFactory.create(parameters.getJSONObject("from"));
         } catch (ClassCastException e) {
