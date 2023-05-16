@@ -32,6 +32,7 @@ public abstract class UiAutomatorControlFinder implements ControlFinder {
      */
     @Override
     public RawUiElementUnion findByControlIndex(int index) {
+        uiDevice.waitForIdle();
         UiObject control = uiDevice.findObject(new UiSelector().index(index));
         return new RawUiElementUnion(control);
     }
@@ -46,6 +47,7 @@ public abstract class UiAutomatorControlFinder implements ControlFinder {
      */
     @Override
     public List<RawUiElementUnion> findByClassName(String className) {
+        uiDevice.waitForIdle();
         return uiDevice.findObjects(By.clazz(className)).stream().map(RawUiElementUnion::new).collect(Collectors.toList());
     }
 
@@ -60,6 +62,7 @@ public abstract class UiAutomatorControlFinder implements ControlFinder {
      */
     @Override
     public RawUiElementUnion findByPosition(int x, int y) {
+        uiDevice.waitForIdle();
         List<UiObject2> controls = uiDevice.findObjects(By.clickable(true));
 
         // TODO: Revise this logic to find the control that is closest to the position, not some

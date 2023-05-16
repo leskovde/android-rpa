@@ -26,6 +26,7 @@ public class UiSelectorControlFinder extends UiAutomatorControlFinder {
      */
     @Override
     public RawUiElementUnion findByResourceId(String resourceId) {
+        uiDevice.waitForIdle();
         UiObject control = uiDevice.findObject(new UiSelector().resourceId(resourceId));
         return new RawUiElementUnion(control);
     }
@@ -38,6 +39,7 @@ public class UiSelectorControlFinder extends UiAutomatorControlFinder {
      */
     @Override
     public List<RawUiElementUnion> findByDescription(String description) {
+        uiDevice.waitForIdle();
         List<RawUiElementUnion> controls = new ArrayList<>();
         UiObject control = uiDevice.findObject(new UiSelector().description(description));
         controls.add(new RawUiElementUnion(control));
@@ -53,6 +55,7 @@ public class UiSelectorControlFinder extends UiAutomatorControlFinder {
      */
     @Override
     public List<RawUiElementUnion> findByTextContent(String content) {
+        uiDevice.waitForIdle();
         List<RawUiElementUnion> controls = new ArrayList<>();
         UiObject control = uiDevice.findObject(new UiSelector().text(content));
         controls.add(new RawUiElementUnion(control));

@@ -176,7 +176,7 @@ public final class Device {
      */
     public void pressRecentApps() {
         pressRecentApps(1);
-        uiDevice.waitForIdle();
+        idle(500);
     }
 
     /**
@@ -213,7 +213,7 @@ public final class Device {
             throw new RuntimeException("Failed to lock the screen: " + e.getMessage());
         }
 
-        uiDevice.waitForIdle();
+        idle(500);
     }
 
     /**

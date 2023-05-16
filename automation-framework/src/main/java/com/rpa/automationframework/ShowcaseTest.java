@@ -26,7 +26,6 @@ public class ShowcaseTest {
 
         Device.getInstance().pressHome();
         Device.getInstance().pressRecentApps();
-        Device.getInstance().idle(500);
         Device.getInstance().pressBack();
 
         Device.getInstance().pressVolumeUp();

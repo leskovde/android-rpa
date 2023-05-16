@@ -27,6 +27,7 @@ public class BySelectorControlFinder extends UiAutomatorControlFinder {
      */
     @Override
     public RawUiElementUnion findByResourceId(String resourceId) {
+        uiDevice.waitForIdle();
         UiObject2 control = uiDevice.findObject(By.res(resourceId));
         return new RawUiElementUnion(control);
     }
@@ -39,6 +40,7 @@ public class BySelectorControlFinder extends UiAutomatorControlFinder {
      */
     @Override
     public List<RawUiElementUnion> findByDescription(String description) {
+        uiDevice.waitForIdle();
         return uiDevice.findObjects(By.desc(description)).stream().map(RawUiElementUnion::new).collect(Collectors.toList());
     }
 
@@ -50,6 +52,7 @@ public class BySelectorControlFinder extends UiAutomatorControlFinder {
      */
     @Override
     public List<RawUiElementUnion> findByTextContent(String content) {
+        uiDevice.waitForIdle();
         return uiDevice.findObjects(By.text(content)).stream().map(RawUiElementUnion::new).collect(Collectors.toList());
     }
 }
