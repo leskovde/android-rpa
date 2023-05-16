@@ -28,7 +28,6 @@ public class Workflow {
      * @param whatSequence  The series of actions to be executed.
      */
     public void addActionSequence(WherePosition wherePosition, WhatSequence whatSequence) {
-        // TODO: Check how equals and hashCode work in Java.
         wherePositions.put(wherePosition.getId(), wherePosition);
         actionSequences.computeIfAbsent(wherePosition, k -> new ArrayList<>()).add(whatSequence);
     }

@@ -10,8 +10,6 @@ import com.rpa.automationframework.internal.types.RawUiElementUnion;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO: Check that the returned control exists before returning it.
-
 /**
  * Finds UiObject2 controls using the BySelector class.
  */

@@ -12,7 +12,6 @@ public interface ControlFinder {
 
     RawUiElementUnion findByResourceId(String resourceId);
 
-    // TODO: Use an enum?
     List<RawUiElementUnion> findByClassName(String className);
 
     List<RawUiElementUnion> findByDescription(String description);

@@ -9,8 +9,6 @@ import com.rpa.automationframework.internal.types.RawUiElementUnion;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Check that the returned control exists before returning it.
-
 /**
  * Finds UiObject controls using the UiSelector class.
  */

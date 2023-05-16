@@ -10,8 +10,6 @@ import com.rpa.automationframework.controls.TextBasedUiElement;
 import com.rpa.automationframework.controls.UiElement;
 import com.rpa.automationframework.internal.helper.ImageUtils;
 
-// TODO: I should check whether the incoming UiObject2 exists.
-
 /**
  * Executes actions on extracted UiObject2 instances.
  */
