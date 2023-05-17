@@ -221,4 +221,411 @@ public class ExampleInputs {
                 ]
             }
             """;
+
+    public static final String CLEAR_NOTIFICATIONS = """
+            {
+                "meta": {
+                    "name": "Notification Cleaner",
+                    "desc": "Creates a notification by setting a timer and then clears it."
+                },
+                "workflow": [
+                    {
+                        "id": "swipe_notification",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "text_view",
+                                    "res_id": "com.google.android.deskclock:id/chronometer"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "swipe",
+                                "args": {
+                                    "from": {
+                                        "type": "image_view",
+                                        "position": "930,1250"
+                                    },
+                                    "to": {
+                                        "type": "image_view",
+                                        "position": "100,1250"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "home",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "view",
+                                    "desc": "Home"
+                                },
+                                {
+                                    "type": "text_view",
+                                    "res_id": "com.google.android.apps.nexuslauncher:id/clock"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "open_app_drawer"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_clock",
+                        "where": {
+                            "$after": "home",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "desc": "Clock"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_search",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "button",
+                                    "text": "Search settings"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "text": "Search settings"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "set_timer",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "text_view",
+                                    "res_id": "com.google.android.deskclock:id/timer_setup_time"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "text": "1"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "text": "0"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "text": "0"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "res_id": "com.google.android.deskclock:id/fab"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_timer",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "text_view",
+                                    "text": "Timer"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "text_view",
+                                            "text": "Timer"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_notifications",
+                        "where": {
+                            "$after": "set_timer",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "home"
+                            },
+                            {
+                                "action": "open_notifications"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "hide_all",
+                        "where": {
+                            "$after": "swipe_notification",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "idle",
+                                "args": {
+                                    "duration": 2000
+                                }
+                            },
+                            {
+                                "action": "lock_screen"
+                            }
+                        ]
+                    }
+                ]
+            }
+            """;
+
+    public static final String ACTIVATE_DEVELOPER_MODE_TEST = """
+            {
+                "meta": {
+                    "name": "Developer Mode Activator",
+                    "desc": "Activates the developer mode by tapping the build version in settings."
+                },
+                "workflow": [
+                    {
+                        "id": "home",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "view",
+                                    "desc": "Home"
+                                },
+                                {
+                                    "type": "text_view",
+                                    "res_id": "com.google.android.apps.nexuslauncher:id/clock"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "open_app_drawer"
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_settings",
+                        "where": {
+                            "$after": "home",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "desc": "Settings"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_search",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "button",
+                                    "text": "Search settings"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "button",
+                                            "text": "Search settings"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "open_build",
+                        "where": {
+                            "$after": "open_search",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "set_text",
+                                "args": {
+                                    "text": "build",
+                                    "selectors": [
+                                        {
+                                            "type": "text_edit",
+                                            "text": "Search settings"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "text_view",
+                                            "text": "Build number"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "click_build",
+                        "where": {
+                            "selectors": [
+                                {
+                                    "type": "text_view",
+                                    "text": "Build number"
+                                }
+                            ]
+                        },
+                        "what": [
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "text_view",
+                                            "text": "Build number"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "text_view",
+                                            "text": "Build number"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "text_view",
+                                            "text": "Build number"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "text_view",
+                                            "text": "Build number"
+                                        }
+                                    ]
+                                }
+                            },                {
+                                "action": "click",
+                                "args": {
+                                    "selectors": [
+                                        {
+                                            "type": "text_view",
+                                            "text": "Build number"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "action": "idle",
+                                "args": {
+                                    "duration": 2000
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "hide_build",
+                        "where": {
+                            "$after": "click_build",
+                            "selectors": []
+                        },
+                        "what": [
+                            {
+                                "action": "lock_screen"
+                            }
+                        ]
+                    }
+                ]
+            }
+            """;
 }

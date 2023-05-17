@@ -30,7 +30,7 @@ public class AutomationRunner {
 
     @Test
     public void runWawFile() {
-        String wawInput = ExampleInputs.EXTRACT_TEXT;
+        String wawInput = ExampleInputs.CLEAR_NOTIFICATIONS;
         MappedWaw waw = new MappedWaw(wawInput);
         Log.println(Log.INFO, "AutomationRunner", "Running the following workflow: " + waw.getName());
         waw.run();
